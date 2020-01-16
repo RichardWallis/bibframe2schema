@@ -1,4 +1,18 @@
-#Bibframe2Schema.org v0.9
+###################################################################
+# bibframe2schema.sparql
+# Version v0.5
+# 
+# SPARQL Script to add Schema.org triples to Bibframe RDF description
+# Assumes definition of bf:Work, bf:Instance
+# 
+# Designed as a query script for Bibframe2Schema schemaise.py script
+#
+# Part of the Bibframe2Schema.org Coumunity Group <https://www.w3.org/community/bibframe2schema/>
+# Originator Richard Wallis / Osma Suominen
+# Licenced under Creative Commons Licence CC0 <https://creativecommons.org/publicdomain/zero/1.0>
+#
+###################################################################
+
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX bf: <http://id.loc.gov/ontologies/bibframe/>
@@ -22,20 +36,23 @@ INSERT {
       schema:sdLicense [[SDLICENSE]];
       schema:sdPublisher [[SDPUBLISHER]].
   
-  ?inst a schema:CreativeWork, schema:Product,schema:IndividualProduct, bf:Instance, ?instPeriodicalType, ?plustype ;
-    schema:exampleOfWork ?work ;
-    schema:name ?instName ;
-    schema:description ?desc, ?note ;
-    schema:isbn ?isbnVal ;
-    schema:issn ?issnVal ;
-    schema:datePublished ?publicationDate ;
-    schema:publication ?publicationEvent ;
-    schema:numberOfPages ?extent ;
-    rdau:P60048 ?carrierCategory ;
-    rdau:P60050 ?mediaCategory ;
-    schema:identifier ?instanceId ;
-    schema:isPartOf ?series ;
-    schema:publisher ?publisherOrganization .
+      ?inst a schema:CreativeWork, schema:Product,schema:IndividualProduct, bf:Instance, ?instPeriodicalType, ?plustype ;
+        schema:exampleOfWork ?work ;
+        schema:name ?instName ;
+        schema:description ?desc, ?note ;
+        schema:isbn ?isbnVal ;
+        schema:issn ?issnVal ;
+        schema:datePublished ?publicationDate ;
+        schema:publication ?publicationEvent ;
+        schema:numberOfPages ?extent ;
+        rdau:P60048 ?carrierCategory ;
+        rdau:P60050 ?mediaCategory ;
+        schema:identifier ?instanceId ;
+        schema:isPartOf ?series ;
+        schema:publisher ?publisherOrganization ;
+        schema:sdDatePublished "[[TODAY]]";
+        schema:sdLicense [[SDLICENSE]];
+        schema:sdPublisher [[SDPUBLISHER]].
     
     ?item a schema:CreativeWork, bf:Instance, ?instPeriodicalType, ?plustype ;
       schema:exampleOfWork ?inst ;
@@ -51,7 +68,11 @@ INSERT {
       schema:identifier ?instanceId ;
       schema:isPartOf ?series ;
       schema:publisher ?publisherOrganization ;
-      schema:sku ?shelf .
+      schema:sku ?shelf ;
+      schema:sdDatePublished "[[TODAY]]";
+      schema:sdLicense [[SDLICENSE]];
+      schema:sdPublisher [[SDPUBLISHER]].
+      
   ?publicationEvent a schema:PublicationEvent ;
     schema:organizer ?publisherOrganization ;
     schema:location ?publicationPlace ;

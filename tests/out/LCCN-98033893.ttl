@@ -12,6 +12,9 @@
     schema:description "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well." ;
     schema:exampleOfWork <http://bibframe.example.org/4507628#Instance> ;
     schema:name "The gruffalo" ;
+    schema:sdDatePublished "2020-01-16" ;
+    schema:sdLicense <https://creativecommons.org/publicdomain/zero/1.0> ;
+    schema:sdPublisher <https://www.w3.org/community/bibframe2schema> ;
     schema:sku "PZ8.3.D7235 Gr 1999" .
 
 <http://bibframe.example.org/4507628#Topic650-19> a schema:DefinedTerm ;
@@ -57,7 +60,10 @@
     schema:name "The gruffalo" ;
     schema:numberOfPages "1 v. (unpaged)" ;
     schema:publisher [ a schema:Organization ;
-            schema:name "Dial Books for Young Readers" ] .
+            schema:name "Dial Books for Young Readers" ] ;
+    schema:sdDatePublished "2020-01-16" ;
+    schema:sdLicense <https://creativecommons.org/publicdomain/zero/1.0> ;
+    schema:sdPublisher <https://www.w3.org/community/bibframe2schema> .
 
 [] a schema:Place ;
     schema:name "New York" .
