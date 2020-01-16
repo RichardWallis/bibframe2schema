@@ -1,0 +1,124 @@
+{
+  "@context": {
+    "bf": "http://id.loc.gov/ontologies/bibframe/",
+    "bflc": "http://id.loc.gov/ontologies/bflc/",
+    "madsrdf": "http://www.loc.gov/mads/rdf/v1#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "@id": "http://bibframe.example.org/4507628#Topic650-19",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "Mice--Fiction."
+    },
+    {
+      "@id": "http://bibframe.example.org/4507628#Work",
+      "@type": [
+        "schema:CreativeWork",
+        "schema:Book"
+      ],
+      "schema:about": [
+        {
+          "@id": "http://bibframe.example.org/4507628#Topic650-21"
+        },
+        {
+          "@id": "http://bibframe.example.org/4507628#Topic650-20"
+        },
+        {
+          "@id": "http://bibframe.example.org/4507628#Topic650-19"
+        }
+      ],
+      "schema:author": {
+        "@id": "http://id.loc.gov/authorities/names/n92049003"
+      },
+      "schema:contributor": {
+        "@id": "http://id.loc.gov/authorities/names/n91071805"
+      },
+      "schema:description": "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well.",
+      "schema:inLanguage": "eng",
+      "schema:name": "The gruffalo",
+      "schema:sdDatePublished": "2020-01-16",
+      "schema:sdLicense": {
+        "@id": "https://creativecommons.org/publicdomain/zero/1.0"
+      },
+      "schema:sdPublisher": {
+        "@id": "https://www.w3.org/community/bibframe2schema"
+      },
+      "schema:workExample": {
+        "@id": "http://bibframe.example.org/4507628#Instance"
+      }
+    },
+    {
+      "@id": "http://bibframe.example.org/4507628#Instance",
+      "@type": [
+        "schema:CreativeWork",
+        "schema:IndividualProduct",
+        "schema:Product",
+        "schema:Book"
+      ],
+      "schema:datePublished": [
+        "c1999",
+        "1999"
+      ],
+      "schema:description": [
+        "col. ill.",
+        "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well."
+      ],
+      "schema:exampleOfWork": {
+        "@id": "http://bibframe.example.org/4507628#Work"
+      },
+      "schema:isbn": "0803723865",
+      "schema:name": "The gruffalo",
+      "schema:numberOfPages": "1 v. (unpaged)",
+      "schema:publisher": {
+        "@id": "_:Nc67ea4c259c044a5a432852b1e07808d"
+      }
+    },
+    {
+      "@id": "http://id.loc.gov/authorities/names/n92049003",
+      "@type": "schema:Person",
+      "schema:name": "Donaldson, Julia"
+    },
+    {
+      "@id": "_:N7d85c720ba3f4c25b47afa0db3a47faf",
+      "@type": "schema:Place",
+      "schema:name": "New York"
+    },
+    {
+      "@id": "http://bibframe.example.org/4507628#Topic650-20",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "Animals--Fiction."
+    },
+    {
+      "@id": "http://bibframe.example.org/4507628#Topic650-21",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "Stories in rhyme."
+    },
+    {
+      "@id": "http://id.loc.gov/authorities/names/n91071805",
+      "@type": "schema:Person",
+      "schema:name": "Scheffler, Axel"
+    },
+    {
+      "@id": "_:Nc67ea4c259c044a5a432852b1e07808d",
+      "@type": "schema:Organization",
+      "schema:name": "Dial Books for Young Readers"
+    },
+    {
+      "@id": "http://bibframe.example.org/4507628#Item050-11",
+      "@type": [
+        "schema:CreativeWork",
+        "schema:Book"
+      ],
+      "schema:description": "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well.",
+      "schema:exampleOfWork": {
+        "@id": "http://bibframe.example.org/4507628#Instance"
+      },
+      "schema:name": "The gruffalo",
+      "schema:sku": "PZ8.3.D7235 Gr 1999"
+    }
+  ]
+}
