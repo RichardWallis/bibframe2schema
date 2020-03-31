@@ -22,13 +22,14 @@
 # Licenced under Creative Commons Licence CC0 <https://creativecommons.org/publicdomain/zero/1.0>
 #
 ###################################################################
-
+VER="0.91"
 import sys
 import os
 import re
 import datetime
 import argparse
 import urllib
+from urlparse import urlparse
 import rdflib 
 import logging 
 logging.basicConfig(level=logging.CRITICAL) 
@@ -50,13 +51,17 @@ EXTS = {"xml": ".xml",
 
 BATCH = True
 SOURCE="."
+URLSOURCE="UrLSoUrCe"
 OUT='-'
+OUTFILE=None
 QUERIES=[]
 TOKENS=None
 TOKENFILE=None
 VERBOSE=False
 SCHEMASTRIP=False
 FORMAT = "turtle"
+FIRSTREPORT=True
+EXEC=""
 
 SCHEMAONLY="""
 prefix schema: <http://schema.org/> 
@@ -68,21 +73,18 @@ DELETE {
 }"""
 
 def getOut(file=""):
-    global OUT, BATCH, SOURCE, QUERIES, FORMAT
-    if OUT == '-':
+    global OUT, OUTFILE, BATCH, SOURCE, QUERIES, FORMAT
+    if OUT == '-' or OUTFILE == '-':
         return sys.stdout
-    elif os.path.isdir(OUT):
-        if not BATCH:
-            file = "%s/%s" % (OUT,file[len(SOURCE)+1:])
-        else:
-            file = "%s/output" % OUT
+    elif OUTFILE:
+        file = "%s/%s" % (OUT,OUTFILE)
     else:
-        file = OUT
-        
+        file = "%s/%s" % (OUT,os.path.basename(file))
+
     froot = os.path.splitext(file)[0]
     file = froot + EXTS[FORMAT]
         
-    report("Output file: %s" %file)
+    report("Output file: %s" % file)
     if not os.path.exists(os.path.dirname(file)):
         report("Creating directory path for file")
         os.makedirs(os.path.dirname(file))
@@ -130,28 +132,39 @@ def tokenSubstitute(string):
 
         
 def report(msg):
-    global VERBOSE
+    global VERBOSE,FIRSTREPORT
     if not VERBOSE:
         return
+    if FIRSTREPORT:
+        FIRSTREPORT=False
+        print("%s version: %s" % (EXEC,VER))
     print(msg)
                   
     
 def main():
-    global OUT, BATCH, SOURCE, QUERIES, VERBOSE, FORMAT, TOKENFILE
+    global OUT, BATCH, SOURCE, QUERIES, VERBOSE, FORMAT, TOKENFILE, OUTFILE, EXEC
+    EXEC = os.path.basename(__file__)
     infiles = []
     query = None
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i","--input", required=True, help="Input rdf file | input dir")
-    parser.add_argument("-o","--output", required=True, help="Output file | - (stdout) | output dir")
+    parser.add_argument("-i","--input", required=True, help="Input rdf file | input rdf file URL | input dir")
+    parser.add_argument("-b", "--batchload", action='store_true', help="Load all input files then output combination into single output file ")
+    parser.add_argument("-o","--output", default=".", help="Output directory | - (stdout) defaults to '.'")
+    parser.add_argument("-O","--outfile", help="Output file name")
     parser.add_argument("-f","--format",default="turtle", help="Output format (xml|rdf|n3|turtle|nt|nquads|jsonld)")
     parser.add_argument("-q","--query", help="Source sparql query files | queries dir")
     parser.add_argument("-t","--tokenfile", help="File containing substitute token mappings")
     parser.add_argument("-c","--querycount", type=int, default=1, help="Number of times to itterate through queries")
     parser.add_argument("-s","--schemaonly", action='store_true', help="Only output Schema.org triples")
     parser.add_argument("-v", action='store_true', help="Verbose output")
+    parser.add_argument("-V", "--version", action='store_true', help="Version")
     args = parser.parse_args()
     
+    if args.version:
+        print("%s version: %s" % (EXEC,VER))
+        
     VERBOSE = args.v
+    BATCH= args.batchload
     SCHEMASTRIP=args.schemaonly
     TOKENFILE=args.tokenfile
     queryCount = args.querycount
@@ -168,19 +181,14 @@ def main():
         
     report("Files to process: %s" % len(infiles))
     
-    if len(infiles) == 1:
-        BATCH = False
-    
         
     OUT = args.output
+    OUTFILE = args.outfile
     
-    if BATCH:
-        if not os.path.exists(OUT):
-            os.makedirs(OUT)
+    if not os.path.exists(OUT):
+        report("Creating directory %s" % OUT)
+        os.makedirs(OUT)
             
-    if os.path.isdir(OUT):
-        BATCH=False
-        
     report("BATCH Mode: %s" % BATCH)
         
     
@@ -192,7 +200,7 @@ def main():
 
     if FORMAT not in EXTS:
         print("Unsupported format: %s" % FORMAT)
-        sys.exit()
+        sys.exit(1)
 
     if args.query and os.path.isdir(args.query):
         for (dirpath, dirnames, filenames) in os.walk(args.query):
@@ -218,19 +226,24 @@ def main():
             except:
                 pass
             g.bind('schema', 'http://schema.org/')
-            
-        count=0
-        while count < queryCount:
-            count+=1
-            if queryCount > 1:
-                report("Queries pass No: %s" % (count))
-            for q in sorted(QUERIES):
-                report("Running query: %s" % q)
-                runQueryFile(graph=g,query=q)
-            
+        if not OUTFILE:
+            outstub = "output"
+        else:
+            outstub = OUTFILE
+        runQueries(g, queryCount=queryCount)
+        outGraph(g,outf,outstub)
+
     else: #Single mode
         for f in infiles:
-            if not os.path.exists(f):
+            outstub = f
+            isUrl = False
+            u = urlparse(f)
+            if u.scheme and u.netloc:
+                isUrl = True
+                SOURCE = URLSOURCE
+                outstub = os.path.basename(u.path)
+                report("URL Source")
+            elif not os.path.exists(f):
                 report("No such file: %s" % f)
                 continue
             g = rdflib.Graph()
@@ -240,22 +253,28 @@ def main():
             except:
                 pass
             g.bind('schema', 'http://schema.org/')
-            count=0
-            while count < queryCount:
-                count+=1
-                if queryCount > 1:
-                    report("Queries pass No: %s" % (count))
-                for q in sorted(QUERIES):
-                    report("Running query: %s" % q)
-                    runQueryFile(graph=g,query=q)
+            runQueries(g, queryCount=queryCount)
+            outGraph(g,outf, outstub)
+            
+def runQueries(g,queryCount=1):
+    count=0
+    while count < queryCount:
+        count+=1
+        if queryCount > 1:
+            report("Queries pass No: %s" % (count))
+        for q in sorted(QUERIES):
+            report("Running query: %s" % q)
+            runQueryFile(graph=g,query=q)
+        
                 
-        if SCHEMASTRIP:
-            report("Stripping none Schema.org triples")
-            runQuery(graph=g,queryText=SCHEMAONLY)
-        out = getOut(file=f)
-        out.write(g.serialize(format = outf,auto_compact=True).decode('utf-8'))
-        out.close()
-    
+def outGraph(g, outf, outstub="output"):
+    if SCHEMASTRIP:
+        report("Stripping none Schema.org triples")
+        runQuery(graph=g,queryText=SCHEMAONLY)
+    out = getOut(file=outstub)
+    out.write(g.serialize(format = outf,auto_compact=True).decode('utf-8'))
+    out.close()
+
 
 if __name__ == "__main__":
     main()
