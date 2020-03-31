@@ -194,7 +194,7 @@ def main():
         print("Unsupported format: %s" % FORMAT)
         sys.exit()
 
-    if os.path.isdir(args.query):
+    if args.query and os.path.isdir(args.query):
         for (dirpath, dirnames, filenames) in os.walk(args.query):
             for f in filenames:
                 if not f.startswith('.'):
