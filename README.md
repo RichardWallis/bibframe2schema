@@ -14,7 +14,7 @@ This area contains scripts for processing source Bibframe data to obtain Schema.
   
   * *--input* *-i* Source input RDF file, or URL of input RDF file, or directory containing one or more RDF files. Acceptable formats (RDF/XML, json-ld, turtle, nt).
   * *--output* *-o* Output file (for single file) or directory for multiple files. 
-  * *--outfile* *-O* Output file name
+  * *--outfile* *-O* Overriding output file name
   * *--batchload* *-b* Load all input files then output combination into single output file
   * *--format* *-f* Serialisation format fot output files (xml|rdf|n3|turtle|nt|nquads|jsonld) - influences output file name extension. Default format turtle.
   * *--query* *-q* File, or directory of files, containing SPARQL query scripts to process imported RDF data to produce output RDF data.
