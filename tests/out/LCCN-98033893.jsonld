@@ -10,17 +10,429 @@
   },
   "@graph": [
     {
-      "@id": "_:N6eaa99cad499416080c86988b3e8b76d",
-      "@type": "schema:Place",
+      "@id": "http://id.loc.gov/vocabulary/countries/nyu",
+      "@type": "bf:Place"
+    },
+    {
+      "@id": "_:N8a5c7696ca224817856f90ad33e50542",
+      "@type": "bf:Local",
+      "bf:assigner": {
+        "@id": "http://id.loc.gov/vocabulary/organizations/dlc"
+      },
+      "rdf:value": "4507628"
+    },
+    {
+      "@id": "_:Nfafbf6696937406db7b40a2ea7f01977",
+      "@type": "bf:Summary",
+      "rdfs:label": "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well."
+    },
+    {
+      "@id": "_:N6dba00e6243b4bc19f95a8c1df4fba95",
+      "@type": "bf:Contribution",
+      "bf:agent": {
+        "@id": "http://id.loc.gov/authorities/names/n91071805"
+      },
+      "bf:role": {
+        "@id": "_:N9afddcd641d84466aff96d2b309b453d"
+      }
+    },
+    {
+      "@id": "_:Nb207660b0e484159b07e2d378b300d85",
+      "@type": "bf:ShelfMarkLcc",
+      "bf:source": {
+        "@id": "http://id.loc.gov/vocabulary/organizations/dlc"
+      },
+      "rdfs:label": "PZ8.3.D7235 Gr 1999"
+    },
+    {
+      "@id": "_:Ncedf0c5844fe41f886dc9bbf7cd2300c",
+      "@type": "bf:ClassificationDdc",
+      "bf:assigner": {
+        "@id": "http://id.loc.gov/vocabulary/organizations/dlc"
+      },
+      "bf:classificationPortion": "[E]",
+      "bf:edition": [
+        "full",
+        {
+          "@type": "xsd:anyURI",
+          "@value": "http://id.loc.gov/vocabulary/classSchemes/ddc21"
+        }
+      ]
+    },
+    {
+      "@id": "_:N7246c9ade3c547bbabbad50b4c027b5e",
+      "@type": "bf:Lccn",
+      "rdf:value": "98033893"
+    },
+    {
+      "@id": "http://id.loc.gov/vocabulary/languages/eng",
+      "@type": "bf:Language"
+    },
+    {
+      "@id": "_:Ncfaa35598b2946a68d536d6359e95887",
+      "@type": [
+        "bflc:PrimaryContribution",
+        "bf:Contribution"
+      ],
+      "bf:agent": {
+        "@id": "http://id.loc.gov/authorities/names/n92049003"
+      },
+      "bf:role": {
+        "@id": "http://id.loc.gov/vocabulary/relators/ctb"
+      }
+    },
+    {
+      "@id": "http://id.loc.gov/vocabulary/maudience/pri",
+      "@type": "bf:IntendedAudience",
+      "rdfs:label": "primary"
+    },
+    {
+      "@id": "_:Ndd9cb89a476343529ef2320b9b857927",
+      "@type": "madsrdf:Topic",
+      "madsrdf:authoritativeLabel": "Fiction"
+    },
+    {
+      "@id": "_:N5079aa7a0df347eb98e3d069912e27d8",
+      "@type": "bf:Source",
+      "bf:code": "lcshac"
+    },
+    {
+      "@id": "_:N9afddcd641d84466aff96d2b309b453d",
+      "@type": "bf:Role",
+      "bflc:relatorMatchKey": "ill",
+      "rdfs:label": "ill."
+    },
+    {
+      "@id": "_:N2afacd3320fa41438b94a974971f1a9d",
+      "@type": "bf:Status",
+      "bf:code": "c",
+      "rdfs:label": "corrected or revised"
+    },
+    {
+      "@id": "http://bibframe.example.org/4507628#Topic650-19",
+      "@type": [
+        "bf:Topic",
+        "madsrdf:ComplexSubject",
+        "schema:DefinedTerm"
+      ],
+      "bf:source": {
+        "@id": "_:N8e76031efac247fca702e06ea25a3e96"
+      },
+      "madsrdf:authoritativeLabel": "Mice--Fiction.",
+      "madsrdf:componentList": {
+        "@list": [
+          {
+            "@id": "_:Ncc3f7f910071451892cd93c40de3256f"
+          },
+          {
+            "@id": "_:Ndd9cb89a476343529ef2320b9b857927"
+          }
+        ]
+      },
+      "madsrdf:isMemberOfMADSScheme": [
+        {
+          "@id": "http://id.loc.gov/authorities/subjects"
+        },
+        {
+          "@id": "http://id.loc.gov/authorities/childrensSubjects"
+        }
+      ],
+      "rdfs:label": "Mice--Fiction.",
+      "schema:name": "Mice--Fiction."
+    },
+    {
+      "@id": "_:N403524be93394323aff1c085600cc356",
+      "@type": "bf:AdminMetadata",
+      "bf:changeDate": {
+        "@type": "xsd:dateTime",
+        "@value": "2004-08-02T12:41:12"
+      },
+      "bf:creationDate": {
+        "@type": "xsd:date",
+        "@value": "1998-07-28"
+      },
+      "bf:descriptionAuthentication": {
+        "@id": "http://id.loc.gov/vocabulary/marcauthen/lcac"
+      },
+      "bf:descriptionConventions": {
+        "@id": "http://id.loc.gov/vocabulary/descriptionConventions/aacr"
+      },
+      "bf:descriptionModifier": {
+        "@id": "http://id.loc.gov/vocabulary/organizations/dlc"
+      },
+      "bf:generationProcess": {
+        "@id": "_:Nd8b9792061d14b2f9f4c720e3e3123c5"
+      },
+      "bf:identifiedBy": {
+        "@id": "_:N8a5c7696ca224817856f90ad33e50542"
+      },
+      "bf:source": {
+        "@id": "http://id.loc.gov/vocabulary/organizations/dlc"
+      },
+      "bf:status": {
+        "@id": "_:N2afacd3320fa41438b94a974971f1a9d"
+      },
+      "bflc:encodingLevel": {
+        "@id": "http://id.loc.gov/vocabulary/menclvl/f"
+      }
+    },
+    {
+      "@id": "_:Ncc3f7f910071451892cd93c40de3256f",
+      "@type": "madsrdf:Topic",
+      "madsrdf:authoritativeLabel": "Mice"
+    },
+    {
+      "@id": "http://id.loc.gov/vocabulary/organizations/dlc",
+      "@type": [
+        "bf:Agent",
+        "bf:Source"
+      ],
+      "rdfs:label": "DLC"
+    },
+    {
+      "@id": "_:Na2146324abd1494fbbf7d2e196f3fd28",
+      "@type": "bf:Lccn",
+      "rdf:value": "98033893"
+    },
+    {
+      "@id": "_:N29525ced0e174c5f8698fe6d04b08f86",
+      "@type": [
+        "bf:Place",
+        "schema:Place"
+      ],
+      "rdfs:label": "New York",
       "schema:name": "New York"
+    },
+    {
+      "@id": "_:N313bf882317a478fbfa5a3c262cea1a3",
+      "@type": [
+        "bf:ProvisionActivity",
+        "bf:Publication"
+      ],
+      "bf:date": {
+        "@type": "http://id.loc.gov/datatypes/edtf",
+        "@value": "1999"
+      },
+      "bf:place": {
+        "@id": "http://id.loc.gov/vocabulary/countries/nyu"
+      }
+    },
+    {
+      "@id": "_:N0289cedbf5cf45349299e084ef1c4e91",
+      "@type": "bf:Note",
+      "bf:noteType": "Physical details",
+      "rdfs:label": "col. ill."
+    },
+    {
+      "@id": "_:Nb5d32f2305a74e36a2787cac16826595",
+      "@type": "bf:Source",
+      "bf:code": "lcshac"
+    },
+    {
+      "@id": "http://id.loc.gov/vocabulary/millus/ill",
+      "@type": "bf:Illustration",
+      "rdfs:label": "illustrations"
+    },
+    {
+      "@id": "http://id.loc.gov/vocabulary/menclvl/f",
+      "@type": "bflc:EncodingLevel",
+      "rdfs:label": "full"
+    },
+    {
+      "@id": "http://bibframe.example.org/4507628#Topic650-21",
+      "@type": [
+        "madsrdf:Topic",
+        "bf:Topic",
+        "schema:DefinedTerm"
+      ],
+      "bf:source": {
+        "@id": "_:Nb5d32f2305a74e36a2787cac16826595"
+      },
+      "madsrdf:authoritativeLabel": "Stories in rhyme.",
+      "madsrdf:isMemberOfMADSScheme": [
+        {
+          "@id": "http://id.loc.gov/authorities/subjects"
+        },
+        {
+          "@id": "http://id.loc.gov/authorities/childrensSubjects"
+        }
+      ],
+      "rdfs:label": "Stories in rhyme.",
+      "schema:name": "Stories in rhyme."
+    },
+    {
+      "@id": "http://bibframe.example.org/4507628#Instance",
+      "@type": [
+        "schema:Product",
+        "bf:Instance",
+        "bf:Print",
+        "schema:Book",
+        "schema:IndividualProduct",
+        "schema:CreativeWork"
+      ],
+      "bf:dimensions": "28 cm.",
+      "bf:editionStatement": "1st ed",
+      "bf:extent": {
+        "@id": "_:Nd08e4d0fc47d4a919dcde418475b4b54"
+      },
+      "bf:hasItem": {
+        "@id": "http://bibframe.example.org/4507628#Item050-11"
+      },
+      "bf:identifiedBy": [
+        {
+          "@id": "_:Nd606683a2afc4323b1a7a514784f0fe8"
+        },
+        {
+          "@id": "_:N7246c9ade3c547bbabbad50b4c027b5e"
+        }
+      ],
+      "bf:instanceOf": {
+        "@id": "http://bibframe.example.org/4507628#Work"
+      },
+      "bf:issuance": {
+        "@id": "http://id.loc.gov/vocabulary/issuance/mono"
+      },
+      "bf:note": {
+        "@id": "_:N0289cedbf5cf45349299e084ef1c4e91"
+      },
+      "bf:provisionActivity": [
+        {
+          "@id": "_:N313bf882317a478fbfa5a3c262cea1a3"
+        },
+        {
+          "@id": "_:N1c8235edcd314ded9626d6ad86e54052"
+        }
+      ],
+      "bf:provisionActivityStatement": "New York : Dial Books for Young Readers, c1999.",
+      "bf:responsibilityStatement": "Julia Donaldson ; pictures by Axel Scheffler",
+      "bf:title": {
+        "@id": "_:N997b08ee518141878178c12af3e6bcb8"
+      },
+      "rdfs:label": "The gruffalo",
+      "schema:datePublished": [
+        "c1999",
+        "1999"
+      ],
+      "schema:description": [
+        "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well.",
+        "col. ill."
+      ],
+      "schema:exampleOfWork": {
+        "@id": "http://bibframe.example.org/4507628#Work"
+      },
+      "schema:isbn": "0803723865",
+      "schema:name": "The gruffalo",
+      "schema:numberOfPages": "1 v. (unpaged)",
+      "schema:publisher": {
+        "@id": "_:Nf8f86587550e42749d1573d4780c8869"
+      },
+      "schema:sdDatePublished": "2020-03-31",
+      "schema:sdLicense": {
+        "@id": "https://creativecommons.org/publicdomain/zero/1.0"
+      },
+      "schema:sdPublisher": {
+        "@id": "https://www.w3.org/community/bibframe2schema"
+      }
+    },
+    {
+      "@id": "_:Nad4798c9624344fc94a32e5bb3ba2eae",
+      "@type": "bf:Title",
+      "bf:mainTitle": "The gruffalo",
+      "bflc:titleSortKey": "gruffalo",
+      "rdfs:label": "gruffalo"
+    },
+    {
+      "@id": "http://id.loc.gov/authorities/names/n92049003",
+      "@type": [
+        "bf:Person",
+        "schema:Person",
+        "bf:Agent"
+      ],
+      "bflc:name00MarcKey": "1001 $aDonaldson, Julia.",
+      "bflc:name00MatchKey": "Donaldson, Julia.",
+      "bflc:primaryContributorName00MatchKey": "Donaldson, Julia.",
+      "rdfs:label": "Donaldson, Julia.",
+      "schema:name": "Donaldson, Julia"
+    },
+    {
+      "@id": "http://id.loc.gov/authorities/genreForms/gf2014026339",
+      "@type": "bf:GenreForm",
+      "rdfs:label": "fiction"
+    },
+    {
+      "@id": "http://bibframe.example.org/4507628#Item050-11",
+      "@type": [
+        "bf:Instance",
+        "schema:CreativeWork",
+        "schema:Book",
+        "bf:Item"
+      ],
+      "bf:itemOf": {
+        "@id": "http://bibframe.example.org/4507628#Instance"
+      },
+      "bf:shelfMark": {
+        "@id": "_:Nb207660b0e484159b07e2d378b300d85"
+      },
+      "schema:description": "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well.",
+      "schema:exampleOfWork": {
+        "@id": "http://bibframe.example.org/4507628#Instance"
+      },
+      "schema:name": "The gruffalo",
+      "schema:sdDatePublished": "2020-03-31",
+      "schema:sdLicense": {
+        "@id": "https://creativecommons.org/publicdomain/zero/1.0"
+      },
+      "schema:sdPublisher": {
+        "@id": "https://www.w3.org/community/bibframe2schema"
+      },
+      "schema:sku": "PZ8.3.D7235 Gr 1999"
     },
     {
       "@id": "http://bibframe.example.org/4507628#Work",
       "@type": [
+        "bf:Work",
+        "schema:Book",
         "schema:CreativeWork",
-        "schema:Book"
+        "bf:Text"
       ],
-      "schema:about": [
+      "bf:adminMetadata": {
+        "@id": "_:N403524be93394323aff1c085600cc356"
+      },
+      "bf:classification": [
+        {
+          "@id": "_:N33e7da9c759846498f48681c8f0eef0f"
+        },
+        {
+          "@id": "_:Ncedf0c5844fe41f886dc9bbf7cd2300c"
+        }
+      ],
+      "bf:contribution": [
+        {
+          "@id": "_:N6dba00e6243b4bc19f95a8c1df4fba95"
+        },
+        {
+          "@id": "_:Ncfaa35598b2946a68d536d6359e95887"
+        }
+      ],
+      "bf:genreForm": {
+        "@id": "http://id.loc.gov/authorities/genreForms/gf2014026339"
+      },
+      "bf:hasInstance": {
+        "@id": "http://bibframe.example.org/4507628#Instance"
+      },
+      "bf:identifiedBy": {
+        "@id": "_:Na2146324abd1494fbbf7d2e196f3fd28"
+      },
+      "bf:illustrativeContent": {
+        "@id": "http://id.loc.gov/vocabulary/millus/ill"
+      },
+      "bf:intendedAudience": {
+        "@id": "http://id.loc.gov/vocabulary/maudience/pri"
+      },
+      "bf:language": {
+        "@id": "http://id.loc.gov/vocabulary/languages/eng"
+      },
+      "bf:subject": [
         {
           "@id": "http://bibframe.example.org/4507628#Topic650-20"
         },
@@ -29,6 +441,24 @@
         },
         {
           "@id": "http://bibframe.example.org/4507628#Topic650-19"
+        }
+      ],
+      "bf:summary": {
+        "@id": "_:Nfafbf6696937406db7b40a2ea7f01977"
+      },
+      "bf:title": {
+        "@id": "_:Nad4798c9624344fc94a32e5bb3ba2eae"
+      },
+      "rdfs:label": "The gruffalo",
+      "schema:about": [
+        {
+          "@id": "http://bibframe.example.org/4507628#Topic650-20"
+        },
+        {
+          "@id": "http://bibframe.example.org/4507628#Topic650-19"
+        },
+        {
+          "@id": "http://bibframe.example.org/4507628#Topic650-21"
         }
       ],
       "schema:author": {
@@ -40,7 +470,7 @@
       "schema:description": "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well.",
       "schema:inLanguage": "eng",
       "schema:name": "The gruffalo",
-      "schema:sdDatePublished": "2020-01-16",
+      "schema:sdDatePublished": "2020-03-31",
       "schema:sdLicense": {
         "@id": "https://creativecommons.org/publicdomain/zero/1.0"
       },
@@ -52,87 +482,136 @@
       }
     },
     {
-      "@id": "http://bibframe.example.org/4507628#Instance",
-      "@type": [
-        "schema:Book",
-        "schema:IndividualProduct",
-        "schema:CreativeWork",
-        "schema:Product"
-      ],
-      "schema:datePublished": [
-        "c1999",
-        "1999"
-      ],
-      "schema:description": [
-        "col. ill.",
-        "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well."
-      ],
-      "schema:exampleOfWork": {
-        "@id": "http://bibframe.example.org/4507628#Work"
-      },
-      "schema:isbn": "0803723865",
-      "schema:name": "The gruffalo",
-      "schema:numberOfPages": "1 v. (unpaged)",
-      "schema:publisher": {
-        "@id": "_:N99b8a28a36d74a38be5e9f0f0935f1cd"
-      },
-      "schema:sdDatePublished": "2020-01-16",
-      "schema:sdLicense": {
-        "@id": "https://creativecommons.org/publicdomain/zero/1.0"
-      },
-      "schema:sdPublisher": {
-        "@id": "https://www.w3.org/community/bibframe2schema"
+      "@id": "_:N8e76031efac247fca702e06ea25a3e96",
+      "@type": "bf:Source",
+      "bf:code": "lcshac"
+    },
+    {
+      "@id": "http://id.loc.gov/vocabulary/issuance/mono",
+      "@type": "bf:Issuance"
+    },
+    {
+      "@id": "_:N33e7da9c759846498f48681c8f0eef0f",
+      "@type": "bf:ClassificationLcc",
+      "bf:classificationPortion": "PZ8.3.D7235",
+      "bf:itemPortion": "Gr 1999",
+      "bf:source": {
+        "@id": "http://id.loc.gov/vocabulary/organizations/dlc"
       }
     },
     {
-      "@id": "http://id.loc.gov/authorities/names/n92049003",
-      "@type": "schema:Person",
-      "schema:name": "Donaldson, Julia"
+      "@id": "_:Nd8b9792061d14b2f9f4c720e3e3123c5",
+      "@type": "bf:GenerationProcess",
+      "rdfs:label": "DLC marc2bibframe2 v1.5.1: 2020-01-08T05:58:48-05:00"
     },
     {
-      "@id": "http://bibframe.example.org/4507628#Topic650-19",
-      "@type": "schema:DefinedTerm",
-      "schema:name": "Mice--Fiction."
+      "@id": "_:N1c8235edcd314ded9626d6ad86e54052",
+      "@type": [
+        "bf:ProvisionActivity",
+        "bf:Publication"
+      ],
+      "bf:agent": {
+        "@id": "_:Nf8f86587550e42749d1573d4780c8869"
+      },
+      "bf:date": "c1999",
+      "bf:place": {
+        "@id": "_:N29525ced0e174c5f8698fe6d04b08f86"
+      }
     },
     {
-      "@id": "_:N99b8a28a36d74a38be5e9f0f0935f1cd",
-      "@type": "schema:Organization",
-      "schema:name": "Dial Books for Young Readers"
+      "@id": "_:Nd3841a8fd1144107ac66c9b961ecf371",
+      "@type": "madsrdf:Topic",
+      "madsrdf:authoritativeLabel": "Animals"
+    },
+    {
+      "@id": "_:N997b08ee518141878178c12af3e6bcb8",
+      "@type": "bf:Title",
+      "bf:mainTitle": "The gruffalo",
+      "bflc:titleSortKey": "gruffalo",
+      "rdfs:label": "The gruffalo"
+    },
+    {
+      "@id": "_:Nd08e4d0fc47d4a919dcde418475b4b54",
+      "@type": "bf:Extent",
+      "rdfs:label": "1 v. (unpaged)"
+    },
+    {
+      "@id": "_:Nd606683a2afc4323b1a7a514784f0fe8",
+      "@type": "bf:Isbn",
+      "bf:qualifier": "trade",
+      "rdf:value": "0803723865"
+    },
+    {
+      "@id": "_:N63b68519890a447fb88b7b6136ae8cc6",
+      "@type": "madsrdf:Topic",
+      "madsrdf:authoritativeLabel": "Fiction"
     },
     {
       "@id": "http://bibframe.example.org/4507628#Topic650-20",
-      "@type": "schema:DefinedTerm",
+      "@type": [
+        "bf:Topic",
+        "madsrdf:ComplexSubject",
+        "schema:DefinedTerm"
+      ],
+      "bf:source": {
+        "@id": "_:N5079aa7a0df347eb98e3d069912e27d8"
+      },
+      "madsrdf:authoritativeLabel": "Animals--Fiction.",
+      "madsrdf:componentList": {
+        "@list": [
+          {
+            "@id": "_:Nd3841a8fd1144107ac66c9b961ecf371"
+          },
+          {
+            "@id": "_:N63b68519890a447fb88b7b6136ae8cc6"
+          }
+        ]
+      },
+      "madsrdf:isMemberOfMADSScheme": [
+        {
+          "@id": "http://id.loc.gov/authorities/childrensSubjects"
+        },
+        {
+          "@id": "http://id.loc.gov/authorities/subjects"
+        }
+      ],
+      "rdfs:label": "Animals--Fiction.",
       "schema:name": "Animals--Fiction."
     },
     {
-      "@id": "http://bibframe.example.org/4507628#Topic650-21",
-      "@type": "schema:DefinedTerm",
-      "schema:name": "Stories in rhyme."
+      "@id": "http://id.loc.gov/vocabulary/marcauthen/lcac",
+      "@type": "bf:DescriptionAuthentication",
+      "rdf:value": "lcac"
+    },
+    {
+      "@id": "http://id.loc.gov/vocabulary/descriptionConventions/aacr",
+      "@type": "bf:DescriptionConventions",
+      "rdfs:label": "aacr"
+    },
+    {
+      "@id": "http://id.loc.gov/vocabulary/relators/ctb",
+      "@type": "bf:Role"
+    },
+    {
+      "@id": "_:Nf8f86587550e42749d1573d4780c8869",
+      "@type": [
+        "schema:Organization",
+        "bf:Agent"
+      ],
+      "rdfs:label": "Dial Books for Young Readers",
+      "schema:name": "Dial Books for Young Readers"
     },
     {
       "@id": "http://id.loc.gov/authorities/names/n91071805",
-      "@type": "schema:Person",
-      "schema:name": "Scheffler, Axel"
-    },
-    {
-      "@id": "http://bibframe.example.org/4507628#Item050-11",
       "@type": [
-        "schema:CreativeWork",
-        "schema:Book"
+        "bf:Person",
+        "schema:Person",
+        "bf:Agent"
       ],
-      "schema:description": "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well.",
-      "schema:exampleOfWork": {
-        "@id": "http://bibframe.example.org/4507628#Instance"
-      },
-      "schema:name": "The gruffalo",
-      "schema:sdDatePublished": "2020-01-16",
-      "schema:sdLicense": {
-        "@id": "https://creativecommons.org/publicdomain/zero/1.0"
-      },
-      "schema:sdPublisher": {
-        "@id": "https://www.w3.org/community/bibframe2schema"
-      },
-      "schema:sku": "PZ8.3.D7235 Gr 1999"
+      "bflc:name00MarcKey": "7001 $aScheffler, Axel,$eill.",
+      "bflc:name00MatchKey": "Scheffler, Axel,",
+      "rdfs:label": "Scheffler, Axel,",
+      "schema:name": "Scheffler, Axel"
     }
   ]
 }
