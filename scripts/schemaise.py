@@ -62,6 +62,10 @@ SCHEMASTRIP=False
 FORMAT = "turtle"
 FIRSTREPORT=True
 EXEC=""
+INFORMAT=None
+
+from LoCSRUResponse import LoCSRUResponse
+PREPROC=None
 
 SCHEMAONLY="""
 prefix schema: <http://schema.org/> 
@@ -72,8 +76,21 @@ DELETE {
     FILTER ( ! (strstarts(str(?p),"http://schema.org") || strstarts(str(?o),"http://schema.org")) )
 }"""
 
+def setPreProcess(proc=None):
+    global PREPROC
+    if not proc:
+        return
+        
+    from LoCSRUResponse import LoCSRUResponse
+    if proc == "LoCSRUResponse":
+        PREPROC=LoCSRUResponse()
+    else:
+        print("Unrecognised preprocess function '%s'" % proc)
+        sys.exit(1)
+
+
 def getOut(file=""):
-    global OUT, OUTFILE, BATCH, SOURCE, QUERIES, FORMAT
+    global OUT, OUTFILE, BATCH, SOURCE, QUERIES, FORMAT, PREPROC
     if OUT == '-' or OUTFILE == '-':
         return sys.stdout
     elif OUTFILE:
@@ -152,21 +169,26 @@ def main():
     parser.add_argument("-o","--output", default=".", help="Output directory | - (stdout) [defaults to '.']")
     parser.add_argument("-O","--outfile", help="Overriding output file name")
     parser.add_argument("-f","--format",default="turtle", help="Output format (xml|rdf|n3|turtle|nt|nquads|jsonld)")
+    parser.add_argument("-F","--sourceformat", help="Format (xml|rdf|n3|turtle|nt|nquads|jsonld) of input")
     parser.add_argument("-q","--query", help="Source sparql query files | queries dir")
     parser.add_argument("-t","--tokenfile", help="File containing substitute token mappings")
     parser.add_argument("-c","--querycount", type=int, default=1, help="Number of times to iterate through queries")
     parser.add_argument("-s","--schemaonly", action='store_true', help="Only output Schema.org triples")
+    parser.add_argument("-p","--preprocess", help="Source preprocess function (eg. LoCSRUResponse)")
     parser.add_argument("-v", action='store_true', help="Verbose output")
     parser.add_argument("-V", "--version", action='store_true', help="Version")
     args = parser.parse_args()
     
     if args.version:
         print("%s version: %s" % (EXEC,VER))
+    
+    setPreProcess(args.preprocess)
         
     VERBOSE = args.v
     BATCH= args.batchload
     SCHEMASTRIP=args.schemaonly
     TOKENFILE=args.tokenfile
+    INFORMAT=args.sourceformat
     queryCount = args.querycount
     
     
@@ -221,10 +243,15 @@ def main():
                 report("No such file: %s" % f)
                 continue
             try:
-                g.parse(f)
+                if PREPROC:
+                    data = PREPROC.process(f)
+                    g.parse(data=data,format=INFORMAT)
+                else:
+                    g.parse(f)
                 report("Loaded : %s" % f)
-            except:
-                pass
+            except Exception as e:
+                print("Parse error for source '%s': \n%s %s" % (f,e,e.message))
+                sys.exit(1)
             g.bind('schema', 'http://schema.org/')
         if not OUTFILE:
             outstub = "output"
@@ -248,10 +275,15 @@ def main():
                 continue
             g = rdflib.Graph()
             try:
-                g.parse(f)
+                if PREPROC:
+                    data = PREPROC.process(f)
+                    g.parse(data=data,format=INFORMAT)
+                else:
+                    g.parse(f,format=INFORMAT)
                 report("Loaded: %s" % f)
-            except:
-                pass
+            except Exception as e:
+                print("Parse error for source '%s': \n%s %s" % (f,e,e.message))
+                sys.exit(1)
             g.bind('schema', 'http://schema.org/')
             runQueries(g, queryCount=queryCount)
             outGraph(g,outf, outstub)

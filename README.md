@@ -20,7 +20,8 @@ This area contains scripts for processing source Bibframe data to obtain Schema.
   * *--query* *-q* File, or directory of files, containing SPARQL query scripts to process imported RDF data to produce output RDF data.
   * *--tokenfile* *-t* File (in JSON) format containing name-value variable pairs for substitution in loaded SPARQL query scripts before being used for processing.
   * *--querycount* *-c* Number of times to process query scripts before outputting resultant data. Default count 1.
-  * *--schemaonly* *-s* Only ouput triples that contain a URI from the Schema.org vocabulary as a subject or predicate.
+  * *--schemaonly* *-s* Only output triples that contain a URI from the Schema.org vocabulary as a subject or predicate.
+  * *--preprocess* *-p* Source preprocess function (eg. LoCSRUResponse).  Function to process input data before attempting to load RDF from it
   * *-v* Run in verbose mode.
   * *--version* *-V* Output version
   
@@ -48,25 +49,34 @@ This area contains scripts for processing source Bibframe data to obtain Schema.
     
     ```scripts/schemaise.py -i https://raw.githubusercontent.com/RichardWallis/bibframe2schema/master/tests/source/LCCN-98033893.xml -o tests/out -q query/bibframe2schema.sparql -t tokens.json -f jsonld -s -v```
 
-  Operational Environment and Dependancies:
+### Operational Environment and Dependancies:
   
   *schemaise.py* Is a python script tested with Python versions 2.7 & 3.6 on Linux-like operating systems (incuding Mac-OS).  It depends on some python libraries
   that may need loading, using the ```pip install``` command.  These include ```json```, ```rdflib```, ```rdflib_jsonld```.
   
 **query**
+
 This area contains SPARQL scripts for processing source Bibframe data to obtain Schema.org data.
 
 * ***bibframe2schema.sparql***
 
   SPARQL Script, using the INSERT verb, to add Schema.org triples to existing Bibframe (2.0) description.
 
-  Intended for use as an input query script for the *schemaise.py* script.  It makes use of the token substitution syntax to insert the processing date, structured data licensing and publisher into resultant triples.
+Intended for use as an input query script for the *schemaise.py* script.  It makes use of the token substitution syntax to insert the processing date, structured data licensing and publisher into resultant triples.
 
 **tokens.json**
+
 File containing token name-value pairs for substitution in a SPARQL query script being processed by the *schemaise.py* script.
 
 **tests**
+
 Area for running test conversions.  Includes example source file(s) and resultant output files.
+
+### Source Preprocessing:
+ 
+ **LoCSRUResponse**
+
+Preprocessor (instigated using ```-p LoCSRUResponse```) designed to handle XML output from Library of Congress search request which captures RDF output within a ```searchRetrieveResponse``` element structure. 
 
 
 
