@@ -55,24 +55,28 @@ This area contains scripts for processing source Bibframe data to obtain Schema.
   that may need loading, using the ```pip install``` command.  These include ```json```, ```rdflib```, ```rdflib_jsonld```.
   
 **query**
+
 This area contains SPARQL scripts for processing source Bibframe data to obtain Schema.org data.
 
 * ***bibframe2schema.sparql***
 
   SPARQL Script, using the INSERT verb, to add Schema.org triples to existing Bibframe (2.0) description.
 
-  Intended for use as an input query script for the *schemaise.py* script.  It makes use of the token substitution syntax to insert the processing date, structured data licensing and publisher into resultant triples.
+Intended for use as an input query script for the *schemaise.py* script.  It makes use of the token substitution syntax to insert the processing date, structured data licensing and publisher into resultant triples.
 
 **tokens.json**
+
 File containing token name-value pairs for substitution in a SPARQL query script being processed by the *schemaise.py* script.
 
 **tests**
+
 Area for running test conversions.  Includes example source file(s) and resultant output files.
 
 ### Source Preprocessing:
  
  **LoCSRUResponse**
- Preprocessor (instigated using ```-p LoCSRUResponse```) designed to handle XML output from Library of Congress search request which captures RDF output within a ```searchRetrieveResponse``` element structure. 
+
+Preprocessor (instigated using ```-p LoCSRUResponse```) designed to handle XML output from Library of Congress search request which captures RDF output within a ```searchRetrieveResponse``` element structure. 
 
 
 
