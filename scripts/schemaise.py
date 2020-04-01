@@ -22,16 +22,21 @@
 # Licenced under Creative Commons Licence CC0 <https://creativecommons.org/publicdomain/zero/1.0>
 #
 ###################################################################
-VER="0.91"
+VER="1.00"
 import sys
 import os
 import re
 import datetime
 import argparse
 import urllib
-from urlparse import urlparse
 import rdflib 
 import logging 
+
+if sys.version_info.major == 2:
+    from urlparse import urlparse
+elif sys.version_info.major == 3:
+    from urllib.parse import urlparse
+    
 logging.basicConfig(level=logging.CRITICAL) 
 log = logging.getLogger(__name__)
 
@@ -250,7 +255,7 @@ def main():
                     g.parse(f)
                 report("Loaded : %s" % f)
             except Exception as e:
-                print("Parse error for source '%s': \n%s %s" % (f,e,e.message))
+                print("Parse error for source '%s': \n%s" % (f,e))
                 sys.exit(1)
             g.bind('schema', 'http://schema.org/')
         if not OUTFILE:
@@ -282,7 +287,7 @@ def main():
                     g.parse(f,format=INFORMAT)
                 report("Loaded: %s" % f)
             except Exception as e:
-                print("Parse error for source '%s': \n%s %s" % (f,e,e.message))
+                print("Parse error for source '%s': \n%s" % (f,e))
                 sys.exit(1)
             g.bind('schema', 'http://schema.org/')
             runQueries(g, queryCount=queryCount)
