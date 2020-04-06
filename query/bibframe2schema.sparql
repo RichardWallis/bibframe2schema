@@ -54,7 +54,7 @@ INSERT {
         schema:sdLicense [[SDLICENSE]];
         schema:sdPublisher [[SDPUBLISHER]].
     
-    ?item a schema:CreativeWork, bf:Instance, ?instPeriodicalType, ?plustype ;
+    ?item a schema:CreativeWork, schema:Product, bf:Instance, ?instPeriodicalType, ?plustype ;
       schema:exampleOfWork ?inst ;
       schema:name ?instName ;
       schema:description ?desc, ?note ;
