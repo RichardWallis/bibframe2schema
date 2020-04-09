@@ -22,14 +22,16 @@
 # Licenced under Creative Commons Licence CC0 <https://creativecommons.org/publicdomain/zero/1.0>
 #
 ###################################################################
-VER="1.00"
+VER="1.01"
 import sys
 import os
 import re
 import datetime
 import argparse
 import urllib
-import rdflib 
+import rdflib
+import json
+ 
 
 if sys.version_info.major == 2:
     from urlparse import urlparse
@@ -303,13 +305,54 @@ def runQueries(g,queryCount=1):
                 
 def outGraph(g, outf, outstub="output"):
     global SCHEMASTRIP
-    print("SCHEMASTRIP %s" % SCHEMASTRIP)
     if SCHEMASTRIP:
         report("Stripping none Schema.org triples")
         runQuery(graph=g,queryText=SCHEMAONLY)
+    outdata = g.serialize(format = outf,auto_compact=True).decode('utf-8')
+    if outf == 'jsonld':
+        outdata = simplyframe(outdata)
     out = getOut(file=outstub)
-    out.write(g.serialize(format = outf,auto_compact=True).decode('utf-8'))
+    out.write(outdata)
     out.close()
+    
+def simplyframe(jsl):
+        data = json.loads(jsl)
+        items, refs = {}, {}
+        for item in data['@graph']:
+            itemid = item.get('@id')
+            if itemid:
+                items[itemid] = item
+            for vs in item.values():
+                for v in [vs] if not isinstance(vs, list) else vs:
+                    if isinstance(v, dict):
+                        refid = v.get('@id')
+                        if refid and refid.startswith('_:'):
+                            refs.setdefault(refid, (v, []))[1].append(item)
+        for ref, subjects in refs.values():
+            if len(subjects) == 1:
+                ref.update(items.pop(ref['@id']))
+                del ref['@id']
+        items = flattenIds(items)
+        data['@graph'] = items
+        return json.dumps(data, indent=2)
+        
+def flattenIds(node):
+        ret = node
+        if isinstance(node, dict):
+            if len(node) == 1:
+                id = node.get("@id", None)
+                if id:
+                    return id #Return node @id instead of node
+            for s, v in node.items():
+                node[s] = flattenIds(v)
+
+        elif isinstance(node,list):
+            lst = []
+            for v in node:
+                lst.append(flattenIds(v))
+            ret = lst
+        return ret
+
 
 
 if __name__ == "__main__":
