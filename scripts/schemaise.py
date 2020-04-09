@@ -30,16 +30,12 @@ import datetime
 import argparse
 import urllib
 import rdflib 
-import logging 
 
 if sys.version_info.major == 2:
     from urlparse import urlparse
 elif sys.version_info.major == 3:
     from urllib.parse import urlparse
     
-logging.basicConfig(level=logging.CRITICAL) 
-log = logging.getLogger(__name__)
-
 
 from rdflib.parser import Parser
 from rdflib.serializer import Serializer
@@ -164,7 +160,7 @@ def report(msg):
                   
     
 def main():
-    global OUT, BATCH, SOURCE, QUERIES, VERBOSE, FORMAT, TOKENFILE, OUTFILE, EXEC
+    global OUT, BATCH, SOURCE, QUERIES, VERBOSE, FORMAT, TOKENFILE, OUTFILE, EXEC, SCHEMASTRIP
     EXEC = os.path.basename(__file__)
     infiles = []
     query = None
@@ -191,7 +187,8 @@ def main():
         
     VERBOSE = args.v
     BATCH= args.batchload
-    SCHEMASTRIP=args.schemaonly
+    if args.schemaonly:
+        SCHEMASTRIP=True
     TOKENFILE=args.tokenfile
     INFORMAT=args.sourceformat
     queryCount = args.querycount
@@ -305,6 +302,8 @@ def runQueries(g,queryCount=1):
         
                 
 def outGraph(g, outf, outstub="output"):
+    global SCHEMASTRIP
+    print("SCHEMASTRIP %s" % SCHEMASTRIP)
     if SCHEMASTRIP:
         report("Stripping none Schema.org triples")
         runQuery(graph=g,queryText=SCHEMAONLY)
