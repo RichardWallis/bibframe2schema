@@ -1,6 +1,6 @@
 ###################################################################
 # bibframe2schema.sparql
-# Version v0.5
+# Version v0.6
 # 
 # SPARQL Script to add Schema.org triples to Bibframe RDF description
 # Assumes definition of bf:Work, bf:Instance
@@ -21,7 +21,7 @@ PREFIX schema: <http://schema.org/>
 PREFIX rdau: <http://rdaregistry.info/Elements/u/>
 
 INSERT {
-    
+	
     ?work a schema:CreativeWork, bf:Work, ?workPeriodicalType, ?plustype ;
       schema:workExample ?inst, ?elecInst ;
       schema:translationOfWork ?origwork ;
@@ -35,11 +35,17 @@ INSERT {
       schema:sdDatePublished "[[TODAY]]";
       schema:sdLicense [[SDLICENSE]];
       schema:sdPublisher [[SDPUBLISHER]].
+      
+	  [[SDPUBLISHERDESCRIPTION]]
   
-      ?inst a schema:CreativeWork, schema:Product,schema:IndividualProduct, bf:Instance, ?instPeriodicalType, ?plustype ;
+      ?inst a schema:CreativeWork, schema:Product,schema:Product, bf:Instance, ?instPeriodicalType, ?plustype ;
         schema:exampleOfWork ?work ;
         schema:name ?instName ;
         schema:description ?desc, ?note ;
+        schema:author ?creator ;
+        schema:contributor ?contributor ;
+        schema:inLanguage ?languageCode ;
+        schema:about ?topic, ?subjectWork, ?subjectOrg, ?subjectPerson ;
         schema:isbn ?isbnVal ;
         schema:issn ?issnVal ;
         schema:datePublished ?publicationDate ;
@@ -54,10 +60,14 @@ INSERT {
         schema:sdLicense [[SDLICENSE]];
         schema:sdPublisher [[SDPUBLISHER]].
     
-    ?item a schema:CreativeWork, schema:Product, bf:Instance, ?instPeriodicalType, ?plustype ;
+    ?item a schema:CreativeWork, schema:IndividualProduct, bf:Item, ?instPeriodicalType, ?plustype ;
       schema:exampleOfWork ?inst ;
       schema:name ?instName ;
       schema:description ?desc, ?note ;
+      schema:author ?creator ;
+      schema:contributor ?contributor ;
+      schema:inLanguage ?languageCode ;
+      schema:about ?topic, ?subjectWork, ?subjectOrg, ?subjectPerson ;
       schema:isbn ?isbnVal ;
       schema:issn ?issnVal ;
       schema:datePublished ?publicationDate ;
@@ -69,12 +79,12 @@ INSERT {
       schema:isPartOf ?series ;
       schema:publisher ?publisherOrganization ;
       schema:sku ?shelf ;
-      schema:sdDatePublished "[[TODAY]]";
+      schema:sdDatePublished "[TODAY]]";
       schema:sdLicense [[SDLICENSE]];
       schema:sdPublisher [[SDPUBLISHER]].
       
   ?publicationEvent a schema:PublicationEvent ;
-    schema:organizer ?publisherOrganization ;
+    schema:publishedBy ?publisherOrganization ;
     schema:location ?publicationPlace ;
     schema:startDate ?publicationDate .
   ?publicationPlace a schema:Place ;
@@ -151,8 +161,8 @@ WHERE {
   
   ?inst bf:instanceOf ?work .
 
-  ?inst bf:title ?instTitle .
-  ?instTitle bf:mainTitle ?instMainTitle .
+  OPTIONAL { ?inst bf:title ?instTitle . }
+  OPTIONAL { ?instTitle bf:mainTitle ?instMainTitle . }
   OPTIONAL { ?instTitle bf:subtitle ?instSubtitle }
   BIND(COALESCE(CONCAT(?instMainTitle, ' : ', ?instSubtitle), ?instMainTitle) AS ?instTitleCombined)
   OPTIONAL { ?instTitle bf:partNumber ?instPartNumber }
@@ -188,19 +198,28 @@ WHERE {
     UNION
     {
       ?inst bf:provisionActivity ?publication .
-      ?publication a bf:Publication .
-      ?publication bf:date ?publicationDateRaw .
-      BIND(STR(?publicationDateRaw) AS ?publicationDate)
+	  ?publication a bf:ProvisionActivity.
+	  BIND(?publication as ?publicationEvent)
+	  OPTIONAL { ?publication bf:place ?publicationPlace . }
+	  OPTIONAL { ?publication bf:date ?publicationDateRaw .
+	      BIND(STR(?publicationDateRaw) AS ?publicationDate) }
+	  OPTIONAL { ?publication bf:agent ?publisherOrganization . }
+	}
+	UNION {
+      ?inst bf:provisionActivity ?publication .
+	  OPTIONAL {
+	      ?publication a bf:Publication .
+	      ?publication bf:date ?publicationDateRaw .
+	      BIND(STR(?publicationDateRaw) AS ?publicationDate)
+	  }
       OPTIONAL {
         ?publication bf:place ?publicationPlace .
         ?publicationPlace rdfs:label ?publicationPlaceName .
       }
-      OPTIONAL {
+	  OPTIONAL {
         ?publication bf:agent ?publisherOrganization .
         ?publisherOrganization rdfs:label ?publisherOrganizationLabelRaw .
         BIND(REPLACE(?publisherOrganizationLabelRaw, '^(jakelija:)? *(.*?)(,? jakaja)?[ \\.]*$', '$2') AS ?publisherOrganizationLabel)
-        # If we have a known publisher, create a publication event too
-        BIND(?publication as ?publicationEvent)
       }
     }
     UNION
@@ -226,7 +245,7 @@ WHERE {
           BIND(IRI(?elecUriLiteral) AS ?elecUri)
       }
     }
-    Union {
+    UNION {
         ?item a bf:Item;
            bf:itemOf ?inst.
            OPTIONAL{ ?itm bf:shelfMark/rdfs:label ?shelf. }
