@@ -146,6 +146,8 @@ def tokenSubstitute(string):
     if TOKENS:
         for t, v in TOKENS.items():
             string = string.replace("[[%s]]" % t ,v)
+
+    string = re.sub('\\[\\[.*?\\]\\]','',string) #Remove unrecognised tokens
     #report(string)
     return string
     
