@@ -66,7 +66,8 @@ Intended for use as an input query script for the *schemaise.py* script.  It mak
 
 **tokens.json**
 
-File containing token name-value pairs for substitution in a SPARQL query script being processed by the *schemaise.py* script.
+File containing token name-value pairs for substitution in a SPARQL query script being processed by the *schemaise.py* script.  See [tokens.md](tokens.md) for details.
+
 
 **tests**
 
