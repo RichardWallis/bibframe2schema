@@ -26,3 +26,12 @@ A token to be replaced can be inserted multiple times anywhere within the *sparq
 An unrecognised token, not defined in the token file, will be replaced with an empty string.
 
 Care must be taken to encode the replacement value of a token both so it is valid JSON, and it results in valid SPARQL format when inserted into the *sparql* script. See the above example.
+
+## Tokens in a SPARQL Script
+Example extract from a sparql file:
+```
+   schema:name ?workTitle ;
+   schema:sdDatePublished "[[TODAY]]";
+   schema:sdLicense [[SDLICENSE]];
+   schema:sdPublisher [[SDPUBLISHER]].
+```
