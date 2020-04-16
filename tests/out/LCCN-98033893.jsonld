@@ -9,11 +9,57 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
   "@graph": {
+    "http://bibframe.example.org/4507628#Topic650-20": {
+      "@id": "http://bibframe.example.org/4507628#Topic650-20",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "Animals--Fiction."
+    },
+    "http://id.loc.gov/authorities/names/n92049003": {
+      "@id": "http://id.loc.gov/authorities/names/n92049003",
+      "@type": "schema:Person",
+      "schema:name": "Donaldson, Julia"
+    },
+    "http://bibframe.example.org/4507628#Topic650-19": {
+      "@id": "http://bibframe.example.org/4507628#Topic650-19",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "Mice--Fiction."
+    },
     "http://bibframe.example.org/4507628#Work": {
       "@id": "http://bibframe.example.org/4507628#Work",
       "@type": [
+        "schema:CreativeWork",
+        "schema:Book"
+      ],
+      "schema:about": [
+        "http://bibframe.example.org/4507628#Topic650-21",
+        "http://bibframe.example.org/4507628#Topic650-20",
+        "http://bibframe.example.org/4507628#Topic650-19"
+      ],
+      "schema:author": "http://id.loc.gov/authorities/names/n92049003",
+      "schema:contributor": "http://id.loc.gov/authorities/names/n91071805",
+      "schema:description": "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well.",
+      "schema:inLanguage": "eng",
+      "schema:name": "The gruffalo",
+      "schema:sdDatePublished": "2020-04-16",
+      "schema:sdLicense": "https://creativecommons.org/publicdomain/zero/1.0",
+      "schema:sdPublisher": "https://bibframe2schema.org",
+      "schema:workExample": "http://bibframe.example.org/4507628#Instance"
+    },
+    "http://id.loc.gov/vocabulary/countries/nyu": {
+      "@id": "http://id.loc.gov/vocabulary/countries/nyu",
+      "@type": "schema:Place"
+    },
+    "http://bibframe.example.org/4507628#Topic650-21": {
+      "@id": "http://bibframe.example.org/4507628#Topic650-21",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "Stories in rhyme."
+    },
+    "http://bibframe.example.org/4507628#Instance": {
+      "@id": "http://bibframe.example.org/4507628#Instance",
+      "@type": [
         "schema:Book",
-        "schema:CreativeWork"
+        "schema:CreativeWork",
+        "schema:Product"
       ],
       "schema:about": [
         "http://bibframe.example.org/4507628#Topic650-21",
@@ -22,70 +68,66 @@
       ],
       "schema:author": "http://id.loc.gov/authorities/names/n92049003",
       "schema:contributor": "http://id.loc.gov/authorities/names/n91071805",
-      "schema:description": "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well.",
-      "schema:inLanguage": "eng",
-      "schema:name": "The gruffalo",
-      "schema:sdDatePublished": "2020-04-09",
-      "schema:sdLicense": "https://creativecommons.org/publicdomain/zero/1.0",
-      "schema:sdPublisher": "https://www.w3.org/community/bibframe2schema",
-      "schema:workExample": "http://bibframe.example.org/4507628#Instance"
-    },
-    "http://bibframe.example.org/4507628#Instance": {
-      "@id": "http://bibframe.example.org/4507628#Instance",
-      "@type": [
-        "schema:CreativeWork",
-        "schema:Book",
-        "schema:IndividualProduct",
-        "schema:Product"
-      ],
       "schema:datePublished": [
-        "1999",
-        "c1999"
+        "c1999",
+        "1999"
       ],
       "schema:description": [
-        "col. ill.",
-        "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well."
+        "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well.",
+        "col. ill."
       ],
       "schema:exampleOfWork": "http://bibframe.example.org/4507628#Work",
+      "schema:inLanguage": "eng",
       "schema:isbn": "0803723865",
       "schema:name": "The gruffalo",
       "schema:numberOfPages": "1 v. (unpaged)",
-      "schema:publisher": {
-        "@type": "schema:Organization",
-        "schema:name": "Dial Books for Young Readers"
-      },
-      "schema:sdDatePublished": "2020-04-09",
+      "schema:publication": [
+        {
+          "@type": "schema:PublicationEvent",
+          "schema:location": "http://id.loc.gov/vocabulary/countries/nyu",
+          "schema:startDate": "1999"
+        },
+        {
+          "@type": "schema:PublicationEvent",
+          "schema:location": {
+            "@type": "schema:Place",
+            "schema:name": "New York"
+          },
+          "schema:publishedBy": "_:Nfca680af26cf4847aa60ff60d7a51c85",
+          "schema:startDate": "c1999"
+        }
+      ],
+      "schema:publisher": "_:Nfca680af26cf4847aa60ff60d7a51c85",
+      "schema:sdDatePublished": "2020-04-16",
       "schema:sdLicense": "https://creativecommons.org/publicdomain/zero/1.0",
-      "schema:sdPublisher": "https://www.w3.org/community/bibframe2schema"
+      "schema:sdPublisher": "https://bibframe2schema.org"
     },
-    "_:N17a8dca908ae4ed4911de26a99a30a7f": {
-      "@id": "_:N17a8dca908ae4ed4911de26a99a30a7f",
-      "@type": "schema:Place",
-      "schema:name": "New York"
-    },
-    "http://bibframe.example.org/4507628#Topic650-19": {
-      "@id": "http://bibframe.example.org/4507628#Topic650-19",
-      "@type": "schema:DefinedTerm",
-      "schema:name": "Mice--Fiction."
-    },
-    "http://bibframe.example.org/4507628#Topic650-21": {
-      "@id": "http://bibframe.example.org/4507628#Topic650-21",
-      "@type": "schema:DefinedTerm",
-      "schema:name": "Stories in rhyme."
+    "_:Nfca680af26cf4847aa60ff60d7a51c85": {
+      "@id": "_:Nfca680af26cf4847aa60ff60d7a51c85",
+      "@type": "schema:Organization",
+      "schema:name": "Dial Books for Young Readers"
     },
     "http://bibframe.example.org/4507628#Item050-11": {
       "@id": "http://bibframe.example.org/4507628#Item050-11",
       "@type": [
-        "schema:Product",
-        "schema:CreativeWork",
-        "schema:Book"
+        "schema:IndividualProduct",
+        "schema:Book",
+        "schema:CreativeWork"
       ],
+      "schema:about": [
+        "http://bibframe.example.org/4507628#Topic650-20",
+        "http://bibframe.example.org/4507628#Topic650-19",
+        "http://bibframe.example.org/4507628#Topic650-21"
+      ],
+      "schema:author": "http://id.loc.gov/authorities/names/n92049003",
+      "schema:contributor": "http://id.loc.gov/authorities/names/n91071805",
       "schema:description": "A clever mouse uses the threat of a terrifying creature to keep from being eaten by a fox, an owl, and a snake--only to have to outwit that creature as well.",
       "schema:exampleOfWork": "http://bibframe.example.org/4507628#Instance",
+      "schema:inLanguage": "eng",
       "schema:name": "The gruffalo",
-      "schema:sdDatePublished": "2020-04-09",
+      "schema:sdDatePublished": "[TODAY]]",
       "schema:sdLicense": "https://creativecommons.org/publicdomain/zero/1.0",
-      "schema:sdPublisher": "https://www.w3.org/community/bibframe2schema",
+      "schema:sdPublisher": "https://bibframe2schema.org",
       "schema:sku": "PZ8.3.D7235 Gr 1999"
     },
     "http://id.loc.gov/authorities/names/n91071805": {
@@ -93,15 +135,11 @@
       "@type": "schema:Person",
       "schema:name": "Scheffler, Axel"
     },
-    "http://id.loc.gov/authorities/names/n92049003": {
-      "@id": "http://id.loc.gov/authorities/names/n92049003",
-      "@type": "schema:Person",
-      "schema:name": "Donaldson, Julia"
-    },
-    "http://bibframe.example.org/4507628#Topic650-20": {
-      "@id": "http://bibframe.example.org/4507628#Topic650-20",
-      "@type": "schema:DefinedTerm",
-      "schema:name": "Animals--Fiction."
+    "https://bibframe2schema.org": {
+      "@id": "https://bibframe2schema.org",
+      "@type": "schema:Organization",
+      "schema:name": "Bibframe2Schema.org Community Group",
+      "schema:url": "https://bibframe2schema.org"
     }
   }
 }
