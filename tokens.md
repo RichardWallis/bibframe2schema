@@ -1,8 +1,8 @@
 # bibframe2schema Token Substitution
 
-The ***schemaise.py*** script makes use of a token subtitution function when loading *sparql* scripts for processing.
+The ***schemaise.py*** script makes use of a token substitution function when loading *sparql* scripts for processing.
 
-In principle tokens of the format [[*token-name*]] placed within a *sparql* script are replaced with defined values at runtime.  There are a basic set of defaut defined token values that are suplimented by further user defined token names and values loaded from a token file in JSON format.
+In principle tokens of the format [[*token-name*]] placed within a *sparql* script are replaced with defined values at runtime.  There are a basic set of default defined token values that are supplemented by further user defined token names and values loaded from a token file in JSON format.
 
 ## Default Defined Token Values
 There are two default tokens:
