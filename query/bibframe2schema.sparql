@@ -1,15 +1,19 @@
 ###################################################################
 # bibframe2schema.sparql
-# Version v0.6
+# Version v0.7
 # 
 # SPARQL Script to add Schema.org triples to Bibframe RDF description
-# Assumes definition of bf:Work, bf:Instance
+# Assumes definition of at least a bf:Work, bf:Instance
 # 
 # Designed as a query script for Bibframe2Schema schemaise.py script
+# Includes tokens of the format [[toke_name]] for substitution by that script
+# that should be removed when used in other sparql processing contexts.
 #
-# Part of the Bibframe2Schema.org Coumunity Group <https://www.w3.org/community/bibframe2schema/>
+# Part of the Bibframe2Schema.org Community Group <https://www.w3.org/community/bibframe2schema/>
 # Originators Richard Wallis / Osma Suominen
-# Licenced under Creative Commons Licence CC0 <https://creativecommons.org/publicdomain/zero/1.0>
+# Licensed under Creative Commons Licence CC0 <https://creativecommons.org/publicdomain/zero/1.0>
+# 
+# For more details visit https://bibframe2schema.org
 #
 ###################################################################
 
