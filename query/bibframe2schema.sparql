@@ -1,19 +1,15 @@
 ###################################################################
 # bibframe2schema.sparql
-# Version v0.7
+# Version v0.6
 # 
 # SPARQL Script to add Schema.org triples to Bibframe RDF description
-# Assumes definition of at least a bf:Work, bf:Instance
+# Assumes definition of bf:Work, bf:Instance
 # 
 # Designed as a query script for Bibframe2Schema schemaise.py script
-# Includes tokens of the format [[token_name]] for substitution by that script
-# that should be removed when used in other sparql processing contexts.
 #
-# Part of the Bibframe2Schema.org Community Group <https://www.w3.org/community/bibframe2schema/>
+# Part of the Bibframe2Schema.org Coumunity Group <https://www.w3.org/community/bibframe2schema/>
 # Originators Richard Wallis / Osma Suominen
-# Licensed under Creative Commons Licence CC0 <https://creativecommons.org/publicdomain/zero/1.0>
-# 
-# For more details visit <https://bibframe2schema.org>
+# Licenced under Creative Commons Licence CC0 <https://creativecommons.org/publicdomain/zero/1.0>
 #
 ###################################################################
 
@@ -83,7 +79,7 @@ INSERT {
       schema:isPartOf ?series ;
       schema:publisher ?publisherOrganization ;
       schema:sku ?shelf ;
-      schema:sdDatePublished "[[TODAY]]";
+      schema:sdDatePublished "[TODAY]]";
       schema:sdLicense [[SDLICENSE]];
       schema:sdPublisher [[SDPUBLISHER]].
       
@@ -266,7 +262,12 @@ WHERE {
     {
       ?inst bf:identifiedBy ?instanceId .
       ?instanceId rdf:value ?instanceIdValue .
-      ?instanceId bf:source/rdfs:label ?instanceIdSource .
+      OPTIONAL{
+          ?instanceId bf:source/rdfs:label ?instanceIdSource .
+      }OPTIONAL{
+          ?instanceId a ?insttype .
+          BIND(STRAFTER(STR(?insttype),STR(bf:)) AS ?instanceIdSource )
+      }
     }
   }
 
