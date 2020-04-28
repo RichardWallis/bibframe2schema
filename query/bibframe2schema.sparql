@@ -197,6 +197,17 @@ WHERE {
     }
     UNION
     {
+      ?inst bf:identifiedBy ?instanceId .
+      ?instanceId rdf:value ?instanceIdValue .
+      OPTIONAL{
+          ?instanceId bf:source/rdfs:label ?instanceIdSource .
+      }OPTIONAL{
+          ?instanceId a ?insttype .
+          BIND(STRAFTER(STR(?insttype),STR(bf:)) AS ?instanceIdSource )
+      }
+    }
+    UNION
+    {
       ?inst bf:provisionActivity ?publication .
 	  ?publication a bf:ProvisionActivity.
 	  BIND(?publication as ?publicationEvent)
@@ -257,17 +268,6 @@ WHERE {
     UNION
     {
       ?inst bf:media/rdfs:label ?mediaCategory .
-    }
-    UNION
-    {
-      ?inst bf:identifiedBy ?instanceId .
-      ?instanceId rdf:value ?instanceIdValue .
-      OPTIONAL{
-          ?instanceId bf:source/rdfs:label ?instanceIdSource .
-      }OPTIONAL{
-          ?instanceId a ?insttype .
-          BIND(STRAFTER(STR(?insttype),STR(bf:)) AS ?instanceIdSource )
-      }
     }
   }
 
