@@ -79,7 +79,7 @@ INSERT {
       schema:isPartOf ?series ;
       schema:publisher ?publisherOrganization ;
       schema:sku ?shelf ;
-      schema:sdDatePublished "[TODAY]]";
+      schema:sdDatePublished "[[TODAY]]";
       schema:sdLicense [[SDLICENSE]];
       schema:sdPublisher [[SDPUBLISHER]].
       
