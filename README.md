@@ -79,6 +79,8 @@ Area for running test conversions.  Includes example source file(s) and resultan
 
 Preprocessor (instigated using ```-p LoCSRUResponse```) designed to handle XML output from Library of Congress search request which captures RDF output within a ```searchRetrieveResponse``` element structure. 
 
+Note: Following general discussions in the developent community, the bibframe2schema.org repository will be renaming its master branch to 'main'.
+
 
 
 
