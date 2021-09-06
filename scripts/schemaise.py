@@ -2,7 +2,7 @@
 ###################################################################
 # 
 # schemaise.py
-# Version: 0.9
+# Version: 1.02
 #
 # Script for processing RDF data, which has been tweaked a little to make it particularly useful to Bibframe2Schema.org.
 #  
@@ -17,12 +17,12 @@
 #   --schemaonly Only ouput triples that contain a URI from the Schema.org vocabulary as a subject or predicate.
 #   -v Run in verbose mode.
 #
-# Copyright (c) 2020 Richard Wallis - Data Liberate <https://dataliberate.com>
+# Copyright (c) 2021 Richard Wallis - Data Liberate <https://dataliberate.com>
 # Originator Richard Wallis
 # Licenced under Creative Commons Licence CC0 <https://creativecommons.org/publicdomain/zero/1.0>
 #
 ###################################################################
-VER="1.01"
+VER="1.02"
 import sys
 import os
 import re
@@ -48,7 +48,7 @@ rdflib.plugin.register("jsonld", Serializer, "rdflib_jsonld.serializer", "JsonLD
 EXTS = {"xml": ".xml",
         "rdf": ".rdf",
         "turtle": ".ttl",
-        "nt": "nt",
+        "nt": ".nt",
         "nquads": ".nq",
         "jsonld": ".jsonld"}
 
@@ -58,6 +58,7 @@ URLSOURCE="UrLSoUrCe"
 OUT='-'
 OUTFILE=None
 QUERIES=[]
+QUERYDEFS={}
 TOKENS=None
 TOKENFILE=None
 VERBOSE=False
@@ -76,7 +77,7 @@ DELETE {
     ?s ?p ?o.
 } WHERE {
     ?s ?p ?o.
-    FILTER ( ! (strstarts(str(?p),"http://schema.org") || strstarts(str(?o),"http://schema.org")) )
+    FILTER ( ! (strstarts(str(?p),"http://schema.org") || strstarts(str(?o),"http://schema.org") || (strstarts(str(?p),"https://schema.org") || strstarts(str(?o),"https://schema.org")) )
 }"""
 
 def setPreProcess(proc=None):
@@ -113,18 +114,13 @@ def getOut(file=""):
 def runQueryFile(graph=None,query=None):
     if not graph or not query:
         return
-    with open(query, 'r') as myfile:
-      runQuery(graph,myfile.read())
-
-def runQuery(graph=None,queryText=None):
-    if not graph or not queryText:
-        return
-    text = tokenSubstitute(queryText)
-    
-    if re.search('INSERT', text, re.IGNORECASE) or re.search('DELETE', text, re.IGNORECASE):
-        graph.update(text)
+    q = QUERYDEFS.get(query,None)
+    if not q:
+        q = queryDef(query)
+    if q.update:
+        graph.update(q.text)
     else:
-        graph.query(text)
+        graph.query(q.text)
         
 def tokenSubstitute(string):
     import json
@@ -257,7 +253,8 @@ def main():
                 report("Loaded : %s" % f)
             except Exception as e:
                 print("Parse error for source '%s': \n%s" % (f,e))
-                sys.exit(1)
+                continue
+                #sys.exit(1)
             g.bind('schema', 'http://schema.org/')
         if not OUTFILE:
             outstub = "output"
@@ -289,11 +286,24 @@ def main():
                 report("Loaded: %s" % f)
             except Exception as e:
                 print("Parse error for source '%s': \n%s" % (f,e))
-                sys.exit(1)
+                continue
             g.bind('schema', 'http://schema.org/')
             runQueries(g, queryCount=queryCount)
             outGraph(g,outf, outstub)
             
+
+class queryDef():
+    def __init__(self,query):
+        self.query = query
+        with open(query, 'r') as myfile:
+          self.text = myfile.read()
+        self.text = tokenSubstitute(self.text)
+        self.update = False
+        if re.search('INSERT', self.text, re.IGNORECASE) or re.search('DELETE', self.text, re.IGNORECASE):
+            self.update = True
+        QUERYDEFS[self.query] = self
+        
+        
 def runQueries(g,queryCount=1):
     count=0
     while count < queryCount:
@@ -310,9 +320,14 @@ def outGraph(g, outf, outstub="output"):
     if SCHEMASTRIP:
         report("Stripping none Schema.org triples")
         runQuery(graph=g,queryText=SCHEMAONLY)
-    outdata = g.serialize(format = outf,auto_compact=True).decode('utf-8')
-    if outf == 'jsonld':
-        outdata = simplyframe(outdata)
+    try:
+        outdata = g.serialize(format = outf,auto_compact=True).decode('utf-8')
+        if outf == 'jsonld':
+            outdata = simplyframe(outdata)
+    except Exception as e:
+        print("Serialization error for source '%s': \n%s" % (outf,e))
+        return
+            
     out = getOut(file=outstub)
     out.write(outdata)
     out.close()
