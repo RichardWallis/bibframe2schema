@@ -2,7 +2,7 @@
 ###################################################################
 # 
 # schemaise.py
-# Version: 1.02
+# Version: 1.03
 #
 # Script for processing RDF data, which has been tweaked a little to make it particularly useful to Bibframe2Schema.org.
 #  
@@ -17,12 +17,12 @@
 #   --schemaonly Only ouput triples that contain a URI from the Schema.org vocabulary as a subject or predicate.
 #   -v Run in verbose mode.
 #
-# Copyright (c) 2021 Richard Wallis - Data Liberate <https://dataliberate.com>
+# Copyright (c) 2020,2021 Richard Wallis - Data Liberate <https://dataliberate.com>
 # Originator Richard Wallis
 # Licenced under Creative Commons Licence CC0 <https://creativecommons.org/publicdomain/zero/1.0>
 #
 ###################################################################
-VER="1.02"
+VER="1.03"
 import sys
 import os
 import re
@@ -41,6 +41,9 @@ elif sys.version_info.major == 3:
 
 from rdflib.parser import Parser
 from rdflib.serializer import Serializer
+from rdflib.plugins.sparql import prepareQuery
+from rdflib.plugins.sparql.parser import parseUpdate
+from rdflib.plugins.sparql.algebra import translateQuery, translateUpdate
 
 rdflib.plugin.register("jsonld", Parser, "rdflib_jsonld.parser", "JsonLDParser")
 rdflib.plugin.register("jsonld", Serializer, "rdflib_jsonld.serializer", "JsonLDSerializer")
@@ -118,9 +121,9 @@ def runQueryFile(graph=None,query=None):
     if not q:
         q = queryDef(query)
     if q.update:
-        graph.update(q.text)
+        graph.update(q.compiled)
     else:
-        graph.query(q.text)
+        graph.query(q.compiled)
         
 def tokenSubstitute(string):
     import json
@@ -301,6 +304,9 @@ class queryDef():
         self.update = False
         if re.search('INSERT', self.text, re.IGNORECASE) or re.search('DELETE', self.text, re.IGNORECASE):
             self.update = True
+            self.compiled = translateUpdate(parseUpdate(self.text))
+        else:
+            self.compiled = prepareQuery(self.text)
         QUERYDEFS[self.query] = self
         
         
