@@ -1,4 +1,3 @@
 Flask
 flask-wtf
-rdflib
-rdflib_jsonld
+rdflib==6.2.0
