@@ -1,23 +1,30 @@
 ###################################################################
 # bibframe2schema.sparql
-# Version v0.6
+# Version v2.0
+# 2022 - 2023
 # 
 # SPARQL Script to add Schema.org triples to Bibframe RDF description
 # Assumes definition of bf:Work, bf:Instance
 # 
 # Designed as a query script for Bibframe2Schema schemaise.py script
 #
-# Part of the Bibframe2Schema.org Coumunity Group <https://www.w3.org/community/bibframe2schema/>
+# Part of the Bibframe2Schema.org Community Group <https://www.w3.org/community/bibframe2schema/>
 # Originators Richard Wallis / Osma Suominen
-# Licenced under Creative Commons Licence CC0 <https://creativecommons.org/publicdomain/zero/1.0>
+# Licensed under Creative Commons License CC0 <https://creativecommons.org/publicdomain/zero/1.0>
 #
 ###################################################################
+
+####
+# Variables ?TODAY, ?SDLICENSE, ?SDPUBLISHER and ?SKIPUNPACKCOMPLEX (for conditional processing)
+# should be defined externally if required. Script will operate without them.
+####
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX bf: <http://id.loc.gov/ontologies/bibframe/>
 PREFIX bflc: <http://id.loc.gov/ontologies/bflc/>
-PREFIX schema: <http://schema.org/>
+PREFIX madsrdf: <http://www.loc.gov/mads/rdf/v1#> 
+PREFIX schema: <https://schema.org/>
 PREFIX rdau: <http://rdaregistry.info/Elements/u/>
 
 INSERT {
@@ -25,64 +32,86 @@ INSERT {
     ?work a schema:CreativeWork, bf:Work, ?workPeriodicalType, ?plustype ;
       schema:workExample ?inst, ?elecInst ;
       schema:translationOfWork ?origwork ;
+      ?propEntName ?entName;
       schema:description ?desc ;
-      schema:author ?creator ;
+      ?propCreatorAuthor ?creator ;
       schema:contributor ?contributor ;
       schema:inLanguage ?languageCode ;
-      schema:about ?topic, ?subjectWork, ?subjectOrg, ?subjectPerson ;
-      rdau:P60049 ?contentCategory ;
-      schema:name ?workTitle ;
-      schema:sdDatePublished "[[TODAY]]";
-      schema:sdLicense [[SDLICENSE]];
-      schema:sdPublisher [[SDPUBLISHER]].
-      
-	  [[SDPUBLISHERDESCRIPTION]]
+      schema:genre ?genre ;
+      schema:about ?topic, ?subjectPlace, ?subjectWork, ?subjectOrg, ?subjectPerson, ?subjectPart;
+      schema:temporalCoverage ?tempCover;
+      rdau:P60049 ?contentCategory;
+      schema:sdDatePublished ?TODAY;
+      schema:sdLicense ?SDLICENSE;
+      schema:sdPublisher ?SDPUBLISHER.
+
+
+  ?hub a schema:CreativeWork, ?hubExtraType, ?hplustype;
+      schema:contributor ?contributor;
+      schema:description ?hdesc ;
+      ?propCreatorAuthor ?creator ;
+      schema:contributor ?contributor ;
+      schema:name ?hubTitle ;
+      schema:genre ?hgenre;
+      schema:sdDatePublished ?TODAY;
+      schema:sdLicense ?SDLICENSE;
+      schema:sdPublisher ?SDPUBLISHER.
+
   
-      ?inst a schema:CreativeWork, schema:Product,schema:Product, bf:Instance, ?instPeriodicalType, ?plustype ;
-        schema:exampleOfWork ?work ;
-        schema:name ?instName ;
-        schema:description ?desc, ?note ;
-        schema:author ?creator ;
-        schema:contributor ?contributor ;
-        schema:inLanguage ?languageCode ;
-        schema:about ?topic, ?subjectWork, ?subjectOrg, ?subjectPerson ;
-        schema:isbn ?isbnVal ;
-        schema:issn ?issnVal ;
-        schema:datePublished ?publicationDate ;
-        schema:publication ?publicationEvent ;
-        schema:numberOfPages ?extent ;
-        rdau:P60048 ?carrierCategory ;
-        rdau:P60050 ?mediaCategory ;
-        schema:identifier ?instanceId ;
-        schema:isPartOf ?series ;
-        schema:publisher ?publisherOrganization ;
-        schema:sdDatePublished "[[TODAY]]";
-        schema:sdLicense [[SDLICENSE]];
-        schema:sdPublisher [[SDPUBLISHER]].
-    
-    ?item a schema:CreativeWork, schema:IndividualProduct, bf:Item, ?instPeriodicalType, ?plustype ;
-      schema:exampleOfWork ?inst ;
-      schema:name ?instName ;
+    ?inst a schema:CreativeWork, schema:Product,schema:Product, bf:Instance, ?instPeriodicalType, ?plustype ;
+      schema:exampleOfWork ?work ;
+      ?propEntName ?entName;
       schema:description ?desc, ?note ;
-      schema:author ?creator ;
+      ?propCreatorAuthor ?creator ;
       schema:contributor ?contributor ;
       schema:inLanguage ?languageCode ;
-      schema:about ?topic, ?subjectWork, ?subjectOrg, ?subjectPerson ;
+      schema:genre ?genre ;
+      schema:about ?topic, ?subjectPlace, ?subjectWork, ?subjectOrg, ?subjectPerson, ?subjectPart;
       schema:isbn ?isbnVal ;
       schema:issn ?issnVal ;
       schema:datePublished ?publicationDate ;
       schema:publication ?publicationEvent ;
-      schema:numberOfPages ?extent ;
+      schema:materialExtent ?extent ;
+      schema:temporalCoverage ?tempCover;
       rdau:P60048 ?carrierCategory ;
       rdau:P60050 ?mediaCategory ;
       schema:identifier ?instanceId ;
       schema:isPartOf ?series ;
-      schema:publisher ?publisherOrganization ;
-      schema:sku ?shelf ;
-      schema:sdDatePublished "[[TODAY]]";
-      schema:sdLicense [[SDLICENSE]];
-      schema:sdPublisher [[SDPUBLISHER]].
-      
+      schema:publisher ?publisherOrganization;
+      schema:sdDatePublished ?TODAY;
+      schema:sdLicense ?SDLICENSE;
+      schema:sdPublisher ?SDPUBLISHER.
+
+    
+  ?item a schema:CreativeWork, schema:IndividualProduct, bf:Item, ?instPeriodicalType, ?plustype ;
+    schema:exampleOfWork ?inst ;
+    ?propEntName ?entName ;
+    schema:description ?desc, ?note ;
+    ?propCreatorAuthor ?creator ;
+    schema:contributor ?contributor ;
+    schema:inLanguage ?languageCode ;
+    schema:genre ?genre ;
+    schema:about ?topic, ?subjectPlace, ?subjectWork, ?subjectOrg, ?subjectPerson, ?subjectPart;
+    schema:isbn ?isbnVal ;
+    schema:issn ?issnVal ;
+    schema:datePublished ?publicationDate ;
+    schema:publication ?publicationEvent ;
+    schema:materialExtent ?extent ;
+    schema:temporalCoverage ?tempCover;
+    rdau:P60048 ?carrierCategory ;
+    rdau:P60050 ?mediaCategory ;
+    schema:identifier ?instanceId ;
+    schema:isPartOf ?series ;
+    schema:publisher ?publisherOrganization ;
+    schema:sku ?shelf;
+    schema:sdDatePublished ?TODAY;
+    schema:sdLicense ?SDLICENSE;
+    schema:sdPublisher ?SDPUBLISHER.
+
+
+#Add name or alternateName to entities (Work, Instance, Item) - derived from ?inst
+	?entToName ?propEntName ?entName.
+
   ?publicationEvent a schema:PublicationEvent ;
     schema:publishedBy ?publisherOrganization ;
     schema:location ?publicationPlace ;
@@ -120,13 +149,17 @@ INSERT {
     schema:name ?origworkTitle ;
     schema:inLanguage ?origLanguageCode ;
     schema:issn ?origworkIssnValue ;
-    schema:author ?creator .
+    ?propCreatorAuthor ?creator .
   ?series a schema:CreativeWork, bf:Work, schema:CreativeWorkSeries ;
     schema:hasPart ?inst ;
     schema:name ?seriesTitleValue ;
     schema:issn ?seriesIssnValue .
   ?topic a schema:DefinedTerm;
     schema:name ?topicLabel .
+  ?madsTopic a schema:DefinedTerm;
+    schema:name ?madsTopicLabel .
+  ?subjectPlace a schema:DefinedTerm;
+    schema:name ?subjectPlaceLabel .
   ?subjectWork a schema:CreativeWork, bf:Work ;
     schema:author ?subjectWorkAgent ;
     schema:name ?subjectWorkName .
@@ -144,280 +177,423 @@ INSERT {
   ?subjectPersonId a schema:PropertyValue ;
     schema:propertyID ?subjectPersonIdentifierSource ;
     schema:value ?subjectPersonIdentifierValue .
+  ?related rdfs:label ?relatedLabel ;
+    schema:name ?relatedLabel.
+  
+    
+  ?agentPerson1 schema:sameAs ?personSameAs1,?personSameAs2;
+    schema:name ?personLabel.
+
+  ?ework schema:exampleOfWork ?wwork.
+  ?wwork schema:workExample ?ework.
+
+  ?genre schema:name ?genreLabel.
+  ?genreForm rdfs:label ?gfLabel;
+    schema:name ?gfLabel.
+
+    
 }
 WHERE {
-    
-    ?work a bf:Work;
-         bf:title/bf:mainTitle ?workTitle.
-         OPTIONAL{ ?work bf:genreForm/rdfs:label ?genre. }
-         OPTIONAL{ ?wrk bf:summary/rdfs:label ?desc. }
-         OPTIONAL{ ?work a bf:Audio. BIND(schema:AudioObject as ?plustype).}
-         OPTIONAL{ ?work a bf:Dataset. BIND(schema:Dataset as ?plustype).}
-         OPTIONAL{ ?work a bf:Cartography. BIND(schema:Map as ?plustype).}
-         OPTIONAL{ ?work a bf:StillImage. BIND(schema:ImageObject as ?plustype).}
-         OPTIONAL{ ?work a bf:MovingImage. BIND(schema:VideoObject as ?plustype).}
-         OPTIONAL{ ?work a bf:Multimedia. BIND(schema:MediaObject as ?plustype).}
-         OPTIONAL{ ?work a bf:Text. BIND(schema:Book as ?plustype).}
   
-  ?inst bf:instanceOf ?work .
 
-  OPTIONAL { ?inst bf:title ?instTitle . }
-  OPTIONAL { ?instTitle bf:mainTitle ?instMainTitle . }
-  OPTIONAL { ?instTitle bf:subtitle ?instSubtitle }
-  BIND(COALESCE(CONCAT(?instMainTitle, ' : ', ?instSubtitle), ?instMainTitle) AS ?instTitleCombined)
-  OPTIONAL { ?instTitle bf:partNumber ?instPartNumber }
-  OPTIONAL { ?instTitle bf:partName ?instPartName }
-  BIND(COALESCE(
-    CONCAT(?instTitleCombined, ' : ', ?instPartNumber, ', ', ?instPartName),
-    CONCAT(?instTitleCombined, ' : ', ?instPartNumber),
-    CONCAT(?instTitleCombined, ' : ', ?instPartName),
-    ?instTitleCombined
-  ) AS ?instNameRaw)
-  BIND(REPLACE(?instNameRaw, '[ \\./]+$', '') AS ?instName)
-
-  # instance-related properties, all optional
-  OPTIONAL {
-    {
-      ?inst bf:issuance <http://id.loc.gov/vocabulary/issuance/serl>
-    }
-    UNION
-    {
-      ?inst bf:identifiedBy ?isbn .
-      ?isbn a bf:Isbn .
-      ?isbn rdf:value ?isbnValRaw .
-      BIND(REPLACE(?isbnValRaw, '-', '') AS ?isbnVal)
-    }
-    UNION
-    {
-      ?inst bf:identifiedBy ?issn .
-      ?issn a bf:Issn .
-      ?issn rdf:value ?issnVal .
-      BIND(schema:Periodical AS ?workPeriodicalType)
-      BIND(schema:Periodical AS ?instPeriodicalType)
-    }
-    UNION
-    {
-      ?inst bf:identifiedBy ?instanceId .
-      ?instanceId rdf:value ?instanceIdValue .
-      OPTIONAL{
-          ?instanceId bf:source/rdfs:label ?instanceIdSource .
-      }OPTIONAL{
-          ?instanceId a ?insttype .
-          BIND(STRAFTER(STR(?insttype),STR(bf:)) AS ?instanceIdSource )
-      }
-    }
-    UNION
-    {
-      ?inst bf:provisionActivity ?publication .
-	  ?publication a bf:ProvisionActivity.
-	  BIND(?publication as ?publicationEvent)
-	  OPTIONAL { ?publication bf:place ?publicationPlace . }
-	  OPTIONAL { ?publication bf:date ?publicationDateRaw .
-	      BIND(STR(?publicationDateRaw) AS ?publicationDate) }
-	  OPTIONAL { ?publication bf:agent ?publisherOrganization . }
-	}
-	UNION {
-      ?inst bf:provisionActivity ?publication .
-	  OPTIONAL {
-	      ?publication a bf:Publication .
-	      ?publication bf:date ?publicationDateRaw .
-	      BIND(STR(?publicationDateRaw) AS ?publicationDate)
-	  }
-      OPTIONAL {
-        ?publication bf:place ?publicationPlace .
-        ?publicationPlace rdfs:label ?publicationPlaceName .
-      }
-	  OPTIONAL {
-        ?publication bf:agent ?publisherOrganization .
-        ?publisherOrganization rdfs:label ?publisherOrganizationLabelRaw .
-        BIND(REPLACE(?publisherOrganizationLabelRaw, '^(jakelija:)? *(.*?)(,? jakaja)?[ \\.]*$', '$2') AS ?publisherOrganizationLabel)
-      }
-    }
-    UNION
-    {
-      ?inst bf:extent/rdfs:label ?extent .
-    }
-    UNION
-    {
-      ?inst bf:note/rdfs:label ?note .
-    }
-    UNION
-    {
-      ?elec bf:itemOf ?inst .
-      ?elec bf:electronicLocator ?elecLoc .
-      BIND(?inst AS ?elecInst) 
-      OPTIONAL {
-          # case 1: with a separate resource using bflc:locator
-          ?elec bf:electronicLocator/bflc:target ?elecUri .
-      }
-      OPTIONAL {
-          # case 2: plain URI
-          ?elec bf:electronicLocator ?elecUriLiteral .
-          BIND(IRI(?elecUriLiteral) AS ?elecUri)
-      }
-    }
-    UNION {
-        ?item a bf:Item;
-           bf:itemOf ?inst.
-           OPTIONAL{ ?itm bf:shelfMark/rdfs:label ?shelf. }
-    }
-    UNION
-    {
-      ?inst bf:carrier/rdfs:label ?carrierCategory .
-    }
-    UNION
-    {
-      ?inst bf:media/rdfs:label ?mediaCategory .
-    }
-  }
-
-  # ?creator is needed in many branches below, so it has to be bound
-  # separately from the UNIONed blocks
-  OPTIONAL {
-    VALUES (?bfCreatorType ?schemaCreatorType) { (bf:Person schema:Person) (bf:Jurisdiction schema:Organization) (bf:Organization schema:Organization)}
-    ?work bf:contribution ?creation .
-    ?creation a bflc:PrimaryContribution .
-    ?creation bf:agent ?creator .
-    ?creator a ?bfCreatorType .
-    ?creator rdfs:label ?creatorLabelRaw .
-    BIND(REPLACE(?creatorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$1") AS ?creatorName)
-    BIND(REPLACE(?creatorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$3") AS ?creatorBirth)
-    BIND(IF(STR(?creatorBirth) != '', ?creatorBirth, ?unbound) as ?creatorBirthDate)
-    BIND(REPLACE(?creatorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$4") AS ?creatorDeath)
-    BIND(IF(STR(?creatorDeath) != '', ?creatorDeath, ?unbound) as ?creatorDeathDate)
-    BIND(REPLACE(?creatorName, '[ ,\\.]+$', '') AS ?creatorLabel)
-    OPTIONAL {
-      ?creator bf:identifiedBy ?creatorId .
-      ?creatorId rdf:value ?creatorIdentifierValue .
-      ?creatorId bf:source/rdfs:label ?creatorIdentifierSource .
-    }
-  }
-
-  # work-related properties, all optional
-  OPTIONAL {
-    {
-      VALUES (?bfContributorType ?schemaContributorType) { (bf:Person schema:Person) (bf:Jurisdiction schema:Organization) (bf:Organization schema:Organization)}
-      ?work bf:contribution ?contribution .
-      FILTER NOT EXISTS { ?contribution a bflc:PrimaryContribution }
-      ?contribution bf:agent ?contributor .
-      ?contributor a ?bfContributorType .
-      ?contributor rdfs:label ?contributorLabelRaw .
-      BIND(REPLACE(?contributorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$1") AS ?contributorName)
-      BIND(REPLACE(?contributorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$3") AS ?contributorBirth)
-      BIND(IF(STR(?contributorBirth) != '', ?contributorBirth, ?unbound) as ?contributorBirthDate)
-      BIND(REPLACE(?contributorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$4") AS ?contributorDeath)
-      BIND(IF(STR(?contributorDeath) != '', ?contributorDeath, ?unbound) as ?contributorDeathDate)
-      BIND(REPLACE(?contributorName, '[ ,\\.]+$', '') AS ?contributorLabel)
-      OPTIONAL {
-        ?contributor bf:identifiedBy ?contributorId .
-        ?contributorId rdf:value ?contributorIdentifierValue .
-        ?contributorId bf:source/rdfs:label ?contributorIdentifierSource .
-      }
-    }
-    UNION
-    {
-      ?work bf:translationOf ?origwork .
-      { ?origwork bf:title/rdfs:label ?origworkTitleRaw }
-      UNION
-      { ?origwork bf:hasInstance/bf:title/rdfs:label ?origworkTitleRaw }
-      BIND(REPLACE(?origworkTitleRaw, '[ ,\\.]+$', '') AS ?origworkTitle)
-      OPTIONAL {
-        ?origwork bf:hasInstance/bf:identifiedBy ?origworkIssn .
-        ?origworkIssn a bf:Issn .
-        ?origworkIssn rdf:value ?origworkIssnValue .
-        BIND(schema:Periodical as ?origworkType)
-      }
-      OPTIONAL {
-        ?origwork bf:language ?origLanguage .
-        BIND(STRAFTER(STR(?origLanguage), 'http://id.loc.gov/vocabulary/languages/') as ?origLanguageCode)
-      }
-    }
-    UNION
-    {
-      ?work bf:identifiedBy ?issn .
-      ?issn a bf:Issn .
-      ?issn rdf:value ?issnVal .
-      BIND(schema:Periodical AS ?workPeriodicalType)
-      BIND(schema:Periodical AS ?instPeriodicalType)
-    }
-    UNION
-    {
-      ?work bf:language ?language .
-      FILTER NOT EXISTS { ?language bf:part [] }
-      OPTIONAL {
-        ?language rdf:value ?languageValue .
-      }
-      BIND(COALESCE(?languageValue, ?language) AS ?languageVal)
-      FILTER (STRSTARTS(STR(?languageVal), 'http://id.loc.gov/vocabulary/languages/'))
-      BIND(STRAFTER(STR(?languageVal), 'http://id.loc.gov/vocabulary/languages/') AS ?languageCode)
-    }
-    UNION
-    {
-      # Work as subject
-      ?work bf:subject ?subjectWork .
-      ?subjectWork a bf:Work .
-      ?subjectWork bf:contribution/bf:agent ?subjectWorkAgent .
-      ?subjectWorkAgent a bf:Person .
-      ?subjectWorkAgent rdfs:label ?subjectWorkAgentLabelRaw .
-      BIND(REPLACE(?subjectWorkAgentLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$1") AS ?subjectWorkAgentName)
-      BIND(REPLACE(?subjectWorkAgentLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$3") AS ?subjectWorkAgentBirth)
-      BIND(IF(STR(?subjectWorkAgentBirth) != '', ?subjectWorkAgentBirth, ?unbound) as ?subjectWorkAgentBirthDate)
-      BIND(REPLACE(?subjectWorkAgentLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$4") AS ?subjectWorkAgentDeath)
-      BIND(IF(STR(?subjectWorkAgentDeath) != '', ?subjectWorkAgentDeath, ?unbound) as ?subjectWorkAgentDeathDate)
-      BIND(REPLACE(?subjectWorkAgentName, '[ ,\\.]+$', '') AS ?subjectWorkAgentLabel)
-      ?subjectWork rdfs:label ?subjectWorkNameRaw .
-      BIND(REPLACE(?subjectWorkNameRaw, '[ ,\\./]+$', '') AS ?subjectWorkName)
-    }
-    UNION
-    {
-      # Topic or Place as subject
-      ?work bf:subject ?topic .
-      { ?topic a bf:Topic } UNION { ?topic a bf:Place }
-      ?topic rdfs:label ?topicLabel .
-    }
-    UNION
-    {
-      # Organization or Meeting as subject
-      ?work bf:subject ?subjectOrg .
-      ?subjectOrg rdfs:label ?subjectOrgNameRaw .
-      BIND(REPLACE(?subjectOrgNameRaw, '[ ,\\.]+$', '') AS ?subjectOrgName)
+  ?work a bf:Work .
+  {
+      ?inst bf:instanceOf ?work .
       {
-        { ?subjectOrg a bf:Organization } UNION { ?subjectOrg a bf:Meeting }
-      }
-    }
-    UNION
-    {
-      # Person as subject
-      ?work bf:subject ?subjectPerson .
-      ?subjectPerson a bf:Person .
-      ?subjectPerson rdfs:label ?subjectPersonLabelRaw .
-      BIND(REPLACE(?subjectPersonLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$1") AS ?subjectPersonName)
-      BIND(REPLACE(?subjectPersonLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$3") AS ?subjectPersonBirth)
-      BIND(IF(STR(?subjectPersonBirth) != '', ?subjectPersonBirth, ?unbound) as ?subjectPersonBirthDate)
-      BIND(REPLACE(?subjectPersonLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$4") AS ?subjectPersonDeath)
-      BIND(IF(STR(?subjectPersonDeath) != '', ?subjectPersonDeath, ?unbound) as ?subjectPersonDeathDate)
-      BIND(REPLACE(?subjectPersonName, '[ ,\\.]+$', '') AS ?subjectPersonLabel)
-      OPTIONAL {
-        ?subjectPerson bf:identifiedBy ?subjectPersonId .
-        ?subjectPersonId rdf:value ?subjectPersonIdentifierValue .
-        ?subjectPersonId bf:source/rdfs:label ?subjectPersonIdentifierSource .
-      }
-    }
-    UNION
-    {
+          optional {
+            ?item a bf:Item; bf:itemOf ?inst.
+          }
+          optional {
+            bind (?tdy as ?tdy2).
+          } 
+          {
+              ?work bf:genreForm ?genre.
+              OPTIONAL {
+                ?genre a bf:GenreForm ;
+                  rdfs:label | madsrdf:authoritativeLabel ?genreLabel
+              }
+          } union {
+              {?genreForm a bf:genreForm} UNION {?genreForm a madsrdf:GenreForm }
+              ?genreForm rdfs:label | madsrdf:authoritativeLabel ?gfLabel.
+          } union {
+              values (?sourceType ?plustype) {
+                  ( bf:Audio schema:AudioObject)
+                  ( bf:Dataset schema:Dataset )
+                  ( bf:Cartography schema:Map )
+                  ( bf:StillImage schema:ImageObject )
+                  ( bf:MovingImage schema:VideoObject )
+                  ( bf:Multimedia schema:MediaObject )
+                  ( bf:Text schema:Book )
+              }
+              ?work a ?sourceType. 
+          } union {
+            #Extract Titles & VariantTitles from ?inst to apply to
+            # Work, Instance, Item (name & alternateName)
+            #Title from ?work is not useful (not fully formed)
+            #VarianTitle from ?work is useful
+              VALUES ?varType{ bf:VariantTitle 
+                    bf:ParallelTitle 
+                    bf:AbbreviatedTitle 
+                    bf:CollectiveTitle 
+                    bf:KeyTitle }
+              {
+                ?inst bf:title ?entTitle.
+              }UNION{
+                ?work bf:title ?varTit.
+                ?varTit a ?varType.
+                bind(?varTit as ?entTitle)
+              }
+        
+              OPTIONAL { ?entTitle bf:mainTitle ?entMainTitle . }
+              OPTIONAL { ?entTitle bf:subtitle ?entSubtitle. }
+              OPTIONAL { ?entTitle bf:partNumber ?entPartNumber. }
+              OPTIONAL { ?entTitle bf:partName ?entPartName. }
+              BIND(COALESCE(CONCAT(?entMainTitle, ' : ', ?entSubtitle), ?entMainTitle) AS ?entTitleCombined) .
+              BIND(COALESCE(
+                  CONCAT(?entTitleCombined, ' : ', ?entPartNumber, ', ', ?entPartName),
+                  CONCAT(?entTitleCombined, ' : ', ?entPartNumber),
+                  CONCAT(?entTitleCombined, ' : ', ?entPartName),
+                  ?entTitleCombined
+                ) AS ?entNameRaw) .
+              BIND(REPLACE(?entNameRaw, '[ \\./]+$', '') AS ?entName) .
+              OPTIONAL {
+                  ?entTitle a ?varType.
+                  bind ( true as ?isVariant) .
+              } .
+              bind ( if(bound(?isVariant), schema:alternateName, schema:name ) as ?propEntName ) .        
+          } union {
+              ?inst bf:issuance <http://id.loc.gov/vocabulary/issuance/serl> .
+          } union {
+              ?inst bf:identifiedBy ?isbn .
+              ?isbn a bf:Isbn .
+              ?isbn rdf:value ?isbnValRaw .
+              BIND(REPLACE(?isbnValRaw, '-', '') AS ?isbnVal) .
+          } union {
+              ?inst bf:identifiedBy ?issn .
+              ?issn a bf:Issn .
+              ?issn rdf:value ?issnVal .
+              BIND(schema:Periodical AS ?workPeriodicalType) .
+              BIND(schema:Periodical AS ?instPeriodicalType) .
+          } union {
+              ?inst bf:identifiedBy ?instanceIdCopy .
+              ?instanceIdCopy rdf:value ?instanceIdValue .
+              bind( bnode(str(?instanceIdCopy)) as ?instanceId ).
+              {
+                  ?instanceIdCopy bf:source/rdfs:label ?instanceIdSource .
+              } union {
+                  ?instanceIdCopy a ?insttype .
+                  BIND(STRAFTER(STR(?insttype),STR(bf:)) AS ?instanceIdSource )
+              }
+          } union {
+              ?inst bf:provisionActivity ?publication .
+            ?publication a bf:ProvisionActivity.
+            BIND(?publication as ?publicationEvent)
+            { ?publication bf:place ?publicationPlace . }
+            union { ?publication bf:date ?publicationDateRaw .
+                BIND(STR(?publicationDateRaw) AS ?publicationDate) }
+            union { ?publication bf:agent ?publisherOrganization . }
+          } union {
+              ?inst bf:provisionActivity ?publication .
+            {
+                ?publication a bf:Publication .
+                ?publication bf:date ?publicationDateRaw .
+                BIND(STR(?publicationDateRaw) AS ?publicationDate)
+            }
+              union {
+                ?publication bf:place ?publicationPlace .
+                ?publicationPlace rdfs:label ?publicationPlaceName .
+              }
+            union {
+                ?publication bf:agent ?publisherOrganization .
+                ?publisherOrganization rdfs:label ?publisherOrganizationLabelRaw .
+                BIND(REPLACE(?publisherOrganizationLabelRaw, '^(jakelija:)? *(.*?)(,? jakaja)?[ \\.]*$', '$2') AS ?publisherOrganizationLabel)
+              }
+          } union {
+      ?inst bf:extent/rdfs:label ?extent .   
+          } union {
+      ?inst bf:note/rdfs:label ?note .
+          } union {
+              ?elec bf:itemOf ?inst .
+              ?elec bf:electronicLocator ?elecLoc .
+              BIND(?inst AS ?elecInst) 
+              {
+                  # case 1: with a separate resource using bflc:locator
+                  ?elec bf:electronicLocator/bflc:target ?elecUri .
+              }
+              union {
+                  # case 2: plain URI
+                  ?elec bf:electronicLocator ?elecUriLiteral .
+                  BIND(IRI(?elecUriLiteral) AS ?elecUri)
+              }
+          } union {
+      ?item bf:shelfMark/rdfs:label ?shelf.
+          } union {
+      ?inst bf:carrier/rdfs:label ?carrierCategory .
+          } union {
+      ?inst bf:media/rdfs:label ?mediaCategory .
+          } union {
+              VALUES (?bfCreatorType ?schemaCreatorType) { 
+                  (bf:Person schema:Person) 
+                  (bf:Jurisdiction schema:Organization) 
+                  (bf:Organization schema:Organization)
+              }
+              ?work bf:contribution ?creation .
+              ?creation a bflc:PrimaryContribution .
+              ?creation bf:agent ?creator .
+              ?creator a ?bfCreatorType .
+              ?creator rdfs:label ?creatorLabelRaw .
+              BIND(REPLACE(?creatorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$1") AS ?creatorName)
+              BIND(REPLACE(?creatorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$3") AS ?creatorBirth)
+              BIND(IF(STR(?creatorBirth) != '', ?creatorBirth, ?unbound) as ?creatorBirthDate)
+              BIND(REPLACE(?creatorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$4") AS ?creatorDeath)
+              BIND(IF(STR(?creatorDeath) != '', ?creatorDeath, ?unbound) as ?creatorDeathDate)
+              BIND(REPLACE(?creatorName, '[ ,\\.]+$', '') AS ?creatorLabel)
+              OPTIONAL {
+                ?creator bf:identifiedBy ?creatorId .
+                ?creatorId rdf:value ?creatorIdentifierValue .
+                ?creatorId bf:source/rdfs:label ?creatorIdentifierSource .
+              } .
+              optional {
+                  ?work a bf:Text .
+                  bind ( true as ?isTextWork) .
+              } .
+              bind ( if(bound(?isTextWork), schema:author, schema:creator ) as ?propCreatorAuthor ) .
+          } union {
+            ?work bf:identifiedBy ?issn .
+            ?issn a bf:Issn .
+            ?issn rdf:value ?issnVal .
+            BIND(schema:Periodical AS ?workPeriodicalType)
+            BIND(schema:Periodical AS ?instPeriodicalType) 
+          } union {
+            ?work bf:contribution ?contribution .
+          } union {
+            ?work bf:relatedTo ?related.
+            ?related bf:title/bf:mainTitle ?relatedTitle.
+            OPTIONAL {
+              ?related bf:partNumber ?partn.
+            }
+            bind(if(bound(?partn),concat(?relatedTitle,". ",?partn),?relatedTitle) as ?relatedLabel).
+          } union {
+            ?work bf:subject ?subjectWork .
+            ?subjectWork a bf:Work .
+            ?subjectWork bf:contribution/bf:agent ?subjectWorkAgent .
+            ?subjectWorkAgent a bf:Person .
+            ?subjectWorkAgent rdfs:label ?subjectWorkAgentLabelRaw .
+            BIND(REPLACE(?subjectWorkAgentLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$1") AS ?subjectWorkAgentName)
+            BIND(REPLACE(?subjectWorkAgentLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$3") AS ?subjectWorkAgentBirth)
+            BIND(IF(STR(?subjectWorkAgentBirth) != '', ?subjectWorkAgentBirth, ?unbound) as ?subjectWorkAgentBirthDate)
+            BIND(REPLACE(?subjectWorkAgentLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$4") AS ?subjectWorkAgentDeath)
+            BIND(IF(STR(?subjectWorkAgentDeath) != '', ?subjectWorkAgentDeath, ?unbound) as ?subjectWorkAgentDeathDate)
+            BIND(REPLACE(?subjectWorkAgentName, '[ ,\\.]+$', '') AS ?subjectWorkAgentLabel)
+            ?subjectWork rdfs:label ?subjectWorkNameRaw .
+            BIND(REPLACE(?subjectWorkNameRaw, '[ ,\\./]+$', '') AS ?subjectWorkName)
+          } union {
+            # Place as subject
+            ?work bf:subject ?subjectPlace .
+            ?subjectPlace a bf:Place .
+            ?subjectPlace rdfs:label | madsrdf:authoritativeLabel ?subjectPlaceLabel .
+          } union {
+            # Organization or Meeting as subject
+            ?work bf:subject ?subjectOrg .
+            ?subjectOrg rdfs:label ?subjectOrgNameRaw .
+            BIND(REPLACE(?subjectOrgNameRaw, '[ ,\\.]+$', '') AS ?subjectOrgName)
+            {
+              { ?subjectOrg a bf:Organization } UNION { ?subjectOrg a bf:Meeting }
+            }
+          } union {
+            # Person as subject
+            ?work bf:subject ?subjectPerson .
+            ?subjectPerson a bf:Person .
+            ?subjectPerson rdfs:label ?subjectPersonLabelRaw .
+            BIND(REPLACE(?subjectPersonLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$1") AS ?subjectPersonName)
+            BIND(REPLACE(?subjectPersonLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$3") AS ?subjectPersonBirth)
+            BIND(IF(STR(?subjectPersonBirth) != '', ?subjectPersonBirth, ?unbound) as ?subjectPersonBirthDate)
+            BIND(REPLACE(?subjectPersonLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$4") AS ?subjectPersonDeath)
+            BIND(IF(STR(?subjectPersonDeath) != '', ?subjectPersonDeath, ?unbound) as ?subjectPersonDeathDate)
+            BIND(REPLACE(?subjectPersonName, '[ ,\\.]+$', '') AS ?subjectPersonLabel)
+            OPTIONAL {
+              ?subjectPerson bf:identifiedBy ?subjectPersonId .
+              ?subjectPersonId rdf:value ?subjectPersonIdentifierValue .
+              ?subjectPersonId bf:source/rdfs:label ?subjectPersonIdentifierSource .
+            }
+          }union {
+            # Topic as subject
+            ?work bf:subject ?topic .
+            { ?topic a bf:Topic } UNION {?topic a madsrdf:ComplexSubject}
+            ?topic rdfs:label | madsrdf:authoritativeLabel ?topicLabel .
+          }union {
+            # ComplexSubject as subject
+            ?work bf:subject ?complex .
+            ?complex a madsrdf:ComplexSubject;
+              madsrdf:componentList/rdf:rest*/rdf:first ?subjectPart .
+            FILTER (!bound(?SKIPUNPACKCOMPLEX)).
+          }union {
+            # Madsrdf:Topics
+            VALUES ?mTopicType{madsrdf:City
+                          madsrdf:ConferenceName
+                          madsrdf:CorporateName
+                          madsrdf:Country
+                          madsrdf:County
+                          madsrdf:FamilyName
+                          madsrdf:GenreForm
+                          madsrdf:Geographic
+                          madsrdf:Name
+                          madsrdf:NameTitle
+                          madsrdf:Occupation
+                          madsrdf:PersonalName
+                          madsrdf:State
+                          madsrdf:Temporal
+                          madsrdf:Title
+                          madsrdf:Topic
+            }
+            ?madsTopic a ?mTopicType;
+              madsrdf:authoritativeLabel ?madsTopicLabel .
+          } union {
+            ?work bf:language ?language .
+            FILTER NOT EXISTS { ?language bf:part [] }
+            OPTIONAL {
+              ?language rdf:value ?languageValue .
+            }
+            BIND(COALESCE(?languageValue, ?language) AS ?languageVal)
+            FILTER (STRSTARTS(STR(?languageVal), 'http://id.loc.gov/vocabulary/languages/'))
+            BIND(STRAFTER(STR(?languageVal), 'http://id.loc.gov/vocabulary/languages/') AS ?languageCode)
+          } union {
+            ?work bf:hasSeries ?series .
+            ?series rdfs:label ?seriesTitle .
+            BIND(REPLACE(?seriesTitle, '[ ,;\\.]+$', '') AS ?seriesTitleValue)
+            OPTIONAL {
+              ?series bf:identifiedBy ?seriesIssn .
+              ?seriesIssn a bf:Issn .
+              ?seriesIssn rdf:value ?seriesIssnValueRaw .
+              BIND(REPLACE(?seriesIssnValueRaw, '[ ;]+$', '') AS ?seriesIssnValue)
+            }
+          } union {
+            ?work bf:summary/rdfs:label ?desc.
+          } union {
+            ?work bf:temporalCoverage ?tempCover.
+          } union {
+            ?work bf:translationOf ?origwork .
+            { ?origwork bf:title/rdfs:label ?origworkTitleRaw }
+            UNION
+            { ?origwork bf:hasInstance/bf:title/rdfs:label ?origworkTitleRaw }
+            BIND(REPLACE(?origworkTitleRaw, '[ ,\\.]+$', '') AS ?origworkTitle)
+            OPTIONAL {
+              ?origwork bf:hasInstance/bf:identifiedBy ?origworkIssn .
+              ?origworkIssn a bf:Issn .
+              ?origworkIssn rdf:value ?origworkIssnValue .
+              BIND(schema:Periodical as ?origworkType)
+            }
+            OPTIONAL {
+              ?origwork bf:language ?origLanguage .
+              BIND(STRAFTER(STR(?origLanguage), 'http://id.loc.gov/vocabulary/languages/') as ?origLanguageCode)
+            }
+          } union {
       ?work bf:content/rdfs:label ?contentCategory .
-    }
-    UNION
-    {
-      ?work bf:hasSeries ?series .
-      ?series rdfs:label ?seriesTitle .
-      BIND(REPLACE(?seriesTitle, '[ ,;\\.]+$', '') AS ?seriesTitleValue)
-      OPTIONAL {
-        ?series bf:identifiedBy ?seriesIssn .
-        ?seriesIssn a bf:Issn .
-        ?seriesIssn rdf:value ?seriesIssnValueRaw .
-        BIND(REPLACE(?seriesIssnValueRaw, '[ ;]+$', '') AS ?seriesIssnValue)
+          }
       }
+  } union {
+      
+    ?hub a bf:Hub.
+    {
+        ?hub bf:title/bf:mainTitle ?hubTitle .
+    } union {
+        ?hub bf:genreForm/rdfs:label | bf:genreForm/madsrdf:authoritativeLabel ?hgenre.
+    }union {
+        ?hub bf:summary/rdfs:label ?hdesc.
+    } union {
+        values (?hsourceType ?hplustype) {
+            ( bf:Audio schema:AudioObject)
+            ( bf:Dataset schema:Dataset )
+            ( bf:Cartography schema:Map )
+            ( bf:StillImage schema:ImageObject )
+            ( bf:MovingImage schema:VideoObject )
+            ( bf:Multimedia schema:MediaObject )
+            ( bf:Text schema:Book )
+        }
+        ?hub a ?hsourceType.
+      } union {
+            ?hub bf:contribution ?contribution .
+      }
+    } union {
+      {
+          ?ework bf:expressionOf ?wwork.
+      } union {
+          ?wwork bf:hasExpression ?ework
+      }
+  } union {
+      {
+          ?agentPerson1 bflc:name00MarcKey ?name00MarcKey1 .
+          bind (replace (?name00MarcKey1,'.*\\$0([^\\$]+)\\$?.*', '$1') as ?pSAText1) .
+          filter (?name00MarcKey1 != ?pSAText1) .
+          bind(replace(?pSAText1,"^\\(OCoLC\\)fst","http://id.worldcat.org/fast/","i") as ?personSameAsText1).
+          filter (regex(?personSameAsText1, "^https*://" )).
+      } .
+      bind (iri(?personSameAsText1) as ?personSameAs1) .
+  } union {
+      {
+          ?agentPerson1 bflc:name00MarcKey ?name00MarcKey2 .
+          bind (replace (?name00MarcKey2,'.*\\$1([^\\$]+)\\$?.*', '$1') as ?pSAText2) .
+          filter (?name00MarcKey2 != ?pSAText2) .
+          bind(replace(?pSAText2,"^\\(OCoLC\\)fst","http://id.worldcat.org/fast/","i") as ?personSameAsText2).
+          filter (regex(?personSameAsText2, "^https*://" )).
+      } .
+      bind (iri(?personSameAsText2) as ?personSameAs2) .
+  } union {
+      ?agentPerson1 bflc:name00MarcKey ?name00MarcKey1 .
+      bind (replace (?name00MarcKey1,'.*\\$d([^\\$]+)\\$?.*', '$1') as ?personDates) .
+      filter (?name00MarcKey1 != ?personDates) .
+      bind (strbefore(?personDates, '-') as ?creatorBirthDate) .
+      filter (?creatorBirthDate != '') .
+  } union {
+      ?agentPerson1 bflc:name00MarcKey ?name00MarcKey1 .
+      bind (replace (?name00MarcKey1,'.*\\$d([^\\$]+)\\$?.*', '$1') as ?personDates) .
+      filter (?name00MarcKey1 != ?personDates) .
+      bind (strafter(?personDates, '-') as ?creatorDeathDate) .
+      filter (?creatorDeathDate != '' && ?creatorDeathDate != ',') .
+  } union { 
+      ?agentPerson1 bflc:name00MarcKey ?name00MarcKey1 .
+      FILTER (!contains(STR(?name00MarcKey1),"$c")).                  #No honerific 
+      bind (replace (?name00MarcKey1,'.*\\$a([^\\$]+)\\$?.*', '$1') as ?personNamea) . 
+      BIND(REPLACE(?personNamea, '[ ,\\.]+$', '') AS ?personLabel)
+  } union {  
+      ?agentPerson1 bflc:name00MarcKey ?name00MarcKey1 .
+      FILTER contains(?name00MarcKey1,"$c").                          #Has honorific
+      bind (replace (?name00MarcKey1,'.*\\$a([^\\$]+)\\$?.*', '$1') as ?personNamea) . 
+      BIND(replace (?name00MarcKey1,'.*\\$c([^\\$]+)\\$?.*', '$1') as ?personNamec) .
+      BIND(replace(?personNamec, '[ ,\\.]+$', '') AS ?honCheck).
+      FILTER(strends(?personNamea, ?honCheck)).                       #$a Already ends with honorific
+      BIND(REPLACE(?personNamea, '[ ,\\.]+$', '') AS ?personLabel)
+    } union {  
+      ?agentPerson1 bflc:name00MarcKey ?name00MarcKey1 .
+      FILTER contains(?name00MarcKey1,"$c").                          #Has honorific
+      bind (replace (?name00MarcKey1,'.*\\$a([^\\$]+)\\$?.*', '$1') as ?personNamea) . 
+      BIND(replace (?name00MarcKey1,'.*\\$c([^\\$]+)\\$?.*', '$1') as ?personNamec) .
+      BIND(replace(?personNamec, '[ ,\\.]+$', '') AS ?honCheck).
+      FILTER(!strends(?personNamea, ?honCheck)).                      #Need to add honorific to personlabel
+      BIND(?personNamec AS ?personNameHon).
+      BIND(CONCAT(?personNamea, ' ', ?personNameHon) AS ?personName) .
+      BIND(REPLACE(?personName, '[ ,\\.]+$', '') AS ?personLabel)
+    }
+  OPTIONAL {
+    VALUES (?bfContributorType ?schemaContributorType) { 
+        (bf:Person schema:Person) 
+        (bf:Jurisdiction schema:Organization) 
+        (bf:Organization schema:Organization)
+    }
+    FILTER NOT EXISTS { ?contribution a bflc:PrimaryContribution }
+    ?contribution bf:agent ?contributor .
+    ?contributor a ?bfContributorType .
+    ?contributor rdfs:label ?contributorLabelRaw .
+    BIND(REPLACE(?contributorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$1") AS ?contributorName)
+    BIND(REPLACE(?contributorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$3") AS ?contributorBirth)
+    BIND(IF(STR(?contributorBirth) != '', ?contributorBirth, ?unbound) as ?contributorBirthDate)
+    BIND(REPLACE(?contributorLabelRaw, "^(.+?)(, ([^,-]*[0-9]+)-([^,\\.]*[0-9]+)?)?,?\\.?$", "$4") AS ?contributorDeath)
+    BIND(IF(STR(?contributorDeath) != '', ?contributorDeath, ?unbound) as ?contributorDeathDate)
+    BIND(REPLACE(?contributorName, '[ ,\\.]+$', '') AS ?contributorLabel)
+    OPTIONAL {
+      ?contributor bf:identifiedBy ?contributorId .
+      ?contributorId rdf:value ?contributorIdentifierValue .
+      ?contributorId bf:source/rdfs:label ?contributorIdentifierSource .
     }
   }
-}
+} 
