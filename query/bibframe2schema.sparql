@@ -13,10 +13,12 @@
 # Licensed under Creative Commons License CC0 <https://creativecommons.org/publicdomain/zero/1.0>
 #
 ###################################################################
-#####
-# Development version - to handle Bibframe 2.1
-# RJW.
+
 ####
+# Variables ?TODAY, ?SDLICENSE, ?SDPUBLISHER and ?SKIPUNPACKCOMPLEX (for conditional processing)
+# should be defined externally if required. Script will operate without them.
+####
+
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX bf: <http://id.loc.gov/ontologies/bibframe/>
