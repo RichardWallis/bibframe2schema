@@ -14,10 +14,10 @@
     bf:shelfMark [ a bf:ShelfMarkLcc ;
             rdfs:label "PZ8.3.D7235 Gr 1999" ;
             bf:source <http://id.loc.gov/vocabulary/organizations/dlc> ] ;
-    schema:about _:N5836056ce2a1451280e9addbb517895e,
-        _:N82f885c197ec4c4c8051f4a22c76d27b,
-        _:Ne95732bbf7f9416e8522505029d58f61,
-        _:Nf98a6a92cb81444bb403d80540bb2872,
+    schema:about _:N032b28370d634036b84ed097e1b9ecfa,
+        _:Nd5a7c85db32849c9bc1ce1a52db558d6,
+        _:Nee9505b1f0a24da8a2d3ae2af8fee6c6,
+        _:Nfbc138eb86a04dd58918d894fbb07874,
         <http://bibframe.example.org/4507628#Topic650-19>,
         <http://bibframe.example.org/4507628#Topic650-20>,
         <http://bibframe.example.org/4507628#Topic650-21> ;
@@ -29,16 +29,16 @@
         "col. ill." ;
     schema:exampleOfWork <http://bibframe.example.org/4507628#Instance> ;
     schema:genre <http://id.loc.gov/authorities/genreForms/gf2014026339> ;
-    schema:identifier _:N1bd82ea6a38f467da151c9495ff2fd0b,
-        _:Nf920ad8e5769457e89230616695c8efd ;
+    schema:identifier _:N8f0dbb66a0c14304bd097cdac5253643,
+        _:Nb62e5718cc694d94a14c6253f6e476ff ;
     schema:inLanguage "eng" ;
     schema:isbn "0803723865" ;
     schema:materialExtent "1 v. (unpaged)" ;
     schema:name "The gruffalo" ;
-    schema:publication _:N59c88a15b2014528bb3ea33f60af1bc4,
-        _:Nee6301b4cfc04c67870afaf3b4ee6748 ;
-    schema:publisher _:Nf1d37458d43b482b95c91e4f2a05bb76 ;
-    schema:sdDatePublished "2023-02-16"^^xsd:date ;
+    schema:publication _:Na827dd4f49f44fb5aa89c79c9f88db50,
+        _:Nd2f012f9f4f94421a1ef58d057e0e125 ;
+    schema:publisher _:N02ef80d226154ccc9f70c2f91ff966b2 ;
+    schema:sdDatePublished "2023-02-17"^^xsd:date ;
     schema:sdLicense <https://creativecommons.org/publicdomain/zero/1.0> ;
     schema:sdPublisher <https://bibframe2schema.org> ;
     schema:sku "PZ8.3.D7235 Gr 1999" .
@@ -85,24 +85,24 @@
             bf:status [ a bf:Status ;
                     rdfs:label "corrected or revised" ;
                     bf:code "c" ] ] ;
-    bf:classification [ a bf:ClassificationDdc ;
+    bf:classification [ a bf:ClassificationLcc ;
+            bf:classificationPortion "PZ8.3.D7235" ;
+            bf:itemPortion "Gr 1999" ;
+            bf:source <http://id.loc.gov/vocabulary/organizations/dlc> ],
+        [ a bf:ClassificationDdc ;
             bf:assigner <http://id.loc.gov/vocabulary/organizations/dlc> ;
             bf:classificationPortion "[E]" ;
             bf:edition "http://id.loc.gov/vocabulary/classSchemes/ddc21"^^xsd:anyURI,
-                "full" ],
-        [ a bf:ClassificationLcc ;
-            bf:classificationPortion "PZ8.3.D7235" ;
-            bf:itemPortion "Gr 1999" ;
-            bf:source <http://id.loc.gov/vocabulary/organizations/dlc> ] ;
-    bf:contribution [ a bf:Contribution ;
+                "full" ] ;
+    bf:contribution [ a bflc:PrimaryContribution,
+                bf:Contribution ;
+            bf:agent <http://id.loc.gov/authorities/names/n92049003> ;
+            bf:role <http://id.loc.gov/vocabulary/relators/ctb> ],
+        [ a bf:Contribution ;
             bf:agent <http://id.loc.gov/authorities/names/n91071805> ;
             bf:role [ a bf:Role ;
                     rdfs:label "ill." ;
-                    bflc:relatorMatchKey "ill" ] ],
-        [ a bflc:PrimaryContribution,
-                bf:Contribution ;
-            bf:agent <http://id.loc.gov/authorities/names/n92049003> ;
-            bf:role <http://id.loc.gov/vocabulary/relators/ctb> ] ;
+                    bflc:relatorMatchKey "ill" ] ] ;
     bf:genreForm <http://id.loc.gov/authorities/genreForms/gf2014026339> ;
     bf:hasInstance <http://bibframe.example.org/4507628#Instance> ;
     bf:identifiedBy [ a bf:Lccn ;
@@ -119,10 +119,10 @@
             rdfs:label "gruffalo" ;
             bflc:titleSortKey "gruffalo" ;
             bf:mainTitle "The gruffalo" ] ;
-    schema:about _:N5836056ce2a1451280e9addbb517895e,
-        _:N82f885c197ec4c4c8051f4a22c76d27b,
-        _:Ne95732bbf7f9416e8522505029d58f61,
-        _:Nf98a6a92cb81444bb403d80540bb2872,
+    schema:about _:N032b28370d634036b84ed097e1b9ecfa,
+        _:Nd5a7c85db32849c9bc1ce1a52db558d6,
+        _:Nee9505b1f0a24da8a2d3ae2af8fee6c6,
+        _:Nfbc138eb86a04dd58918d894fbb07874,
         <http://bibframe.example.org/4507628#Topic650-19>,
         <http://bibframe.example.org/4507628#Topic650-20>,
         <http://bibframe.example.org/4507628#Topic650-21> ;
@@ -132,7 +132,7 @@
     schema:genre <http://id.loc.gov/authorities/genreForms/gf2014026339> ;
     schema:inLanguage "eng" ;
     schema:name "The gruffalo" ;
-    schema:sdDatePublished "2023-02-16"^^xsd:date ;
+    schema:sdDatePublished "2023-02-17"^^xsd:date ;
     schema:sdLicense <https://creativecommons.org/publicdomain/zero/1.0> ;
     schema:sdPublisher <https://bibframe2schema.org> ;
     schema:workExample <http://bibframe.example.org/4507628#Instance> .
@@ -161,18 +161,18 @@
     bf:note [ a bf:Note ;
             rdfs:label "col. ill." ;
             bf:noteType "Physical details" ] ;
-    bf:provisionActivity _:N59c88a15b2014528bb3ea33f60af1bc4,
-        _:Nee6301b4cfc04c67870afaf3b4ee6748 ;
+    bf:provisionActivity _:Na827dd4f49f44fb5aa89c79c9f88db50,
+        _:Nd2f012f9f4f94421a1ef58d057e0e125 ;
     bf:provisionActivityStatement "New York : Dial Books for Young Readers, c1999." ;
     bf:responsibilityStatement "Julia Donaldson ; pictures by Axel Scheffler" ;
     bf:title [ a bf:Title ;
             rdfs:label "The gruffalo" ;
             bflc:titleSortKey "gruffalo" ;
             bf:mainTitle "The gruffalo" ] ;
-    schema:about _:N5836056ce2a1451280e9addbb517895e,
-        _:N82f885c197ec4c4c8051f4a22c76d27b,
-        _:Ne95732bbf7f9416e8522505029d58f61,
-        _:Nf98a6a92cb81444bb403d80540bb2872,
+    schema:about _:N032b28370d634036b84ed097e1b9ecfa,
+        _:Nd5a7c85db32849c9bc1ce1a52db558d6,
+        _:Nee9505b1f0a24da8a2d3ae2af8fee6c6,
+        _:Nfbc138eb86a04dd58918d894fbb07874,
         <http://bibframe.example.org/4507628#Topic650-19>,
         <http://bibframe.example.org/4507628#Topic650-20>,
         <http://bibframe.example.org/4507628#Topic650-21> ;
@@ -184,16 +184,16 @@
         "col. ill." ;
     schema:exampleOfWork <http://bibframe.example.org/4507628#Work> ;
     schema:genre <http://id.loc.gov/authorities/genreForms/gf2014026339> ;
-    schema:identifier _:N1bd82ea6a38f467da151c9495ff2fd0b,
-        _:Nf920ad8e5769457e89230616695c8efd ;
+    schema:identifier _:N8f0dbb66a0c14304bd097cdac5253643,
+        _:Nb62e5718cc694d94a14c6253f6e476ff ;
     schema:inLanguage "eng" ;
     schema:isbn "0803723865" ;
     schema:materialExtent "1 v. (unpaged)" ;
     schema:name "The gruffalo" ;
-    schema:publication _:N59c88a15b2014528bb3ea33f60af1bc4,
-        _:Nee6301b4cfc04c67870afaf3b4ee6748 ;
-    schema:publisher _:Nf1d37458d43b482b95c91e4f2a05bb76 ;
-    schema:sdDatePublished "2023-02-16"^^xsd:date ;
+    schema:publication _:Na827dd4f49f44fb5aa89c79c9f88db50,
+        _:Nd2f012f9f4f94421a1ef58d057e0e125 ;
+    schema:publisher _:N02ef80d226154ccc9f70c2f91ff966b2 ;
+    schema:sdDatePublished "2023-02-17"^^xsd:date ;
     schema:sdLicense <https://creativecommons.org/publicdomain/zero/1.0> ;
     schema:sdPublisher <https://bibframe2schema.org> .
 
@@ -204,7 +204,7 @@
     bf:source [ a bf:Source ;
             bf:code "lcshac" ] ;
     madsrdf:authoritativeLabel "Mice--Fiction." ;
-    madsrdf:componentList ( _:N82f885c197ec4c4c8051f4a22c76d27b _:Nf98a6a92cb81444bb403d80540bb2872 ) ;
+    madsrdf:componentList ( _:Nee9505b1f0a24da8a2d3ae2af8fee6c6 _:Nd5a7c85db32849c9bc1ce1a52db558d6 ) ;
     madsrdf:isMemberOfMADSScheme <http://id.loc.gov/authorities/childrensSubjects>,
         <http://id.loc.gov/authorities/subjects> ;
     schema:name "Mice--Fiction." .
@@ -216,7 +216,7 @@
     bf:source [ a bf:Source ;
             bf:code "lcshac" ] ;
     madsrdf:authoritativeLabel "Animals--Fiction." ;
-    madsrdf:componentList ( _:Ne95732bbf7f9416e8522505029d58f61 _:N5836056ce2a1451280e9addbb517895e ) ;
+    madsrdf:componentList ( _:N032b28370d634036b84ed097e1b9ecfa _:Nfbc138eb86a04dd58918d894fbb07874 ) ;
     madsrdf:isMemberOfMADSScheme <http://id.loc.gov/authorities/childrensSubjects>,
         <http://id.loc.gov/authorities/subjects> ;
     schema:name "Animals--Fiction." .
@@ -257,30 +257,20 @@
         bf:Source ;
     rdfs:label "DLC" .
 
-_:N1bd82ea6a38f467da151c9495ff2fd0b a schema:PropertyValue ;
-    schema:propertyID "Lccn" ;
-    schema:value "98033893" .
-
-_:N457fbe7aa00a40d297d486315ec409d4 a bf:Place,
+_:N8b3a700295d0410a943221db65530671 a bf:Place,
         schema:Place ;
     rdfs:label "New York" ;
     schema:name "New York" .
 
-_:Nf920ad8e5769457e89230616695c8efd a schema:PropertyValue ;
+_:N8f0dbb66a0c14304bd097cdac5253643 a schema:PropertyValue ;
+    schema:propertyID "Lccn" ;
+    schema:value "98033893" .
+
+_:Nb62e5718cc694d94a14c6253f6e476ff a schema:PropertyValue ;
     schema:propertyID "Isbn" ;
     schema:value "0803723865" .
 
-_:N59c88a15b2014528bb3ea33f60af1bc4 a bf:ProvisionActivity,
-        bf:Publication,
-        schema:PublicationEvent ;
-    bf:agent _:Nf1d37458d43b482b95c91e4f2a05bb76 ;
-    bf:date "c1999" ;
-    bf:place _:N457fbe7aa00a40d297d486315ec409d4 ;
-    schema:location _:N457fbe7aa00a40d297d486315ec409d4 ;
-    schema:publishedBy _:Nf1d37458d43b482b95c91e4f2a05bb76 ;
-    schema:startDate "c1999" .
-
-_:Nee6301b4cfc04c67870afaf3b4ee6748 a bf:ProvisionActivity,
+_:Na827dd4f49f44fb5aa89c79c9f88db50 a bf:ProvisionActivity,
         bf:Publication,
         schema:PublicationEvent ;
     bf:date "1999"^^<http://id.loc.gov/datatypes/edtf> ;
@@ -288,27 +278,37 @@ _:Nee6301b4cfc04c67870afaf3b4ee6748 a bf:ProvisionActivity,
     schema:location <http://id.loc.gov/vocabulary/countries/nyu> ;
     schema:startDate "1999" .
 
-_:N5836056ce2a1451280e9addbb517895e a madsrdf:Topic,
-        schema:DefinedTerm ;
-    madsrdf:authoritativeLabel "Fiction" ;
-    schema:name "Fiction" .
+_:Nd2f012f9f4f94421a1ef58d057e0e125 a bf:ProvisionActivity,
+        bf:Publication,
+        schema:PublicationEvent ;
+    bf:agent _:N02ef80d226154ccc9f70c2f91ff966b2 ;
+    bf:date "c1999" ;
+    bf:place _:N8b3a700295d0410a943221db65530671 ;
+    schema:location _:N8b3a700295d0410a943221db65530671 ;
+    schema:publishedBy _:N02ef80d226154ccc9f70c2f91ff966b2 ;
+    schema:startDate "c1999" .
 
-_:N82f885c197ec4c4c8051f4a22c76d27b a madsrdf:Topic,
-        schema:DefinedTerm ;
-    madsrdf:authoritativeLabel "Mice" ;
-    schema:name "Mice" .
-
-_:Ne95732bbf7f9416e8522505029d58f61 a madsrdf:Topic,
-        schema:DefinedTerm ;
-    madsrdf:authoritativeLabel "Animals" ;
-    schema:name "Animals" .
-
-_:Nf1d37458d43b482b95c91e4f2a05bb76 a bf:Agent,
+_:N02ef80d226154ccc9f70c2f91ff966b2 a bf:Agent,
         schema:Organization ;
     rdfs:label "Dial Books for Young Readers" ;
     schema:name "Dial Books for Young Readers" .
 
-_:Nf98a6a92cb81444bb403d80540bb2872 a madsrdf:Topic,
+_:N032b28370d634036b84ed097e1b9ecfa a madsrdf:Topic,
+        schema:DefinedTerm ;
+    madsrdf:authoritativeLabel "Animals" ;
+    schema:name "Animals" .
+
+_:Nd5a7c85db32849c9bc1ce1a52db558d6 a madsrdf:Topic,
+        schema:DefinedTerm ;
+    madsrdf:authoritativeLabel "Fiction" ;
+    schema:name "Fiction" .
+
+_:Nee9505b1f0a24da8a2d3ae2af8fee6c6 a madsrdf:Topic,
+        schema:DefinedTerm ;
+    madsrdf:authoritativeLabel "Mice" ;
+    schema:name "Mice" .
+
+_:Nfbc138eb86a04dd58918d894fbb07874 a madsrdf:Topic,
         schema:DefinedTerm ;
     madsrdf:authoritativeLabel "Fiction" ;
     schema:name "Fiction" .

@@ -18,10 +18,12 @@ This area contains scripts for processing source Bibframe data to obtain Schema.
   * *--batchload* *-b* Load all input files then output combination into single output file
   * *--format* *-f* Serialisation format for output files (xml|rdf|n3|turtle|nt|nquads|json-ld) - influences output file name extension. Default format turtle.
   * *--query* *-q* File, or directory of files, containing SPARQL query scripts to process imported RDF data to produce output RDF data.
-  * *--bindings* *-B* Key-value pairs for SPARQL bindings that passed to SPARQL query processing
+  * *--bindings* *-B* Key-value pairs for SPARQL varible bindings to be passed to SPARQL query processing
   * *--querycount* *-c* Number of times to process query scripts before outputting resultant data. Default count 1.
   * *--schemaonly* *-s* Only output triples that contain a URI from the Schema.org vocabulary as a subject or predicate.
-  * *--preprocess* *-p* Source preprocess function (eg. LoCSRUResponse).  Function to process input data before attempting to load RDF from it
+  * *--preprocess* *-p* Source preprocess function (eg. LoCSRUResponse).  Function to process input data before attempting to load 
+  RDF from it
+  * *--postprocess* *-P* Graph postprocess function.  Function to proccess RDF graph prior to output serialization.
   * *-v* Run in verbose mode.
   * *--version* *-V* Output version
   
@@ -48,8 +50,7 @@ This area contains scripts for processing source Bibframe data to obtain Schema.
 
 ### Operational Environment and Dependancies:
   
-  *schemaise.py* Is a python script tested with Python versions 2.7 & 3.6 on Linux-like operating systems (incuding Mac-OS).  It depends on some python libraries
-  that may need loading, using the ```pip install -r requirements.txt``` command. 
+  *schemaise.py* Is a python script tested with Python version 3.10 on Linux-like operating systems (incuding Mac-OS).  It depends on some python libraries that may need loading, using the ```pip install -r requirements.txt``` command. 
   
 **query**
 
@@ -59,12 +60,7 @@ This area contains SPARQL scripts for processing source Bibframe data to obtain 
 
   SPARQL Script, using the INSERT verb, to add Schema.org triples to existing Bibframe (2.0) description.
 
-Intended for use as an input query script for the *schemaise.py* script.  It makes use of the token substitution syntax to insert the processing date, structured data licensing and publisher into resultant triples.
-
-**tokens.json**
-
-File containing token name-value pairs for substitution in a SPARQL query script being processed by the *schemaise.py* script.  See [tokens.md](tokens.md) for details.
-
+Intended for use as an input query script for the *schemaise.py* script.  However, it is equally applicable to other SPARQL scripting environments.
 
 **tests**
 
